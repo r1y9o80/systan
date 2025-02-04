@@ -17,8 +17,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 //現在開いているHTMLの情報を取得
 const learn_nuttons = document.querySelectorAll("#learn_button")?? "";
-const list_button = document.querySelectorAll("#list_button")?? "";
-const list = document.querySelector("../list/list.html/#tbody")?? "";
+const list_button = document.querySelectorAll(".list_button")?? "";
+
+console.log(list_button)
 
 const data = require('../data.json')
 list_button.addEventListener('click', (event) => {
