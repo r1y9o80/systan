@@ -1,0 +1,22 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    margin: 0;
+}
+
+table {
+    border-collapse: collapse; /* tableに適用 */
+    margin-top: 80px;
+    width: clamp(18.125rem, 8.807rem + 46.59vw, 43.75rem);
+}
+
+table tr td {
+    border: solid 2px;
+    font-size: 20px;
+}
+
+td{
+    height: 30px;
+}
