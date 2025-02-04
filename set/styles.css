@@ -1,0 +1,106 @@
+body{
+    background-color: rgb(238, 238, 238);
+    flex-direction: column;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+header {
+    width: 100%; /* ヘッダー全体の幅を親要素に合わせる */
+    overflow-x: auto; /* 横スクロールを許可 */
+    border-bottom: 2px solid rgb(224, 224, 224);
+}
+
+
+header ul {
+    display: flex; /* フレックスボックスで横並び */
+    flex-wrap: nowrap; /* コンテンツの折り返しを防ぐ */
+    gap: 30px; /* リスト項目間の間隔 */
+    padding: 10px; /* デフォルトの余白を削除 */
+    margin: 0; /* デフォルトのマージンを削除 */
+    list-style: none; /* リストの点を削除 */
+}
+
+header li {
+    white-space: nowrap; /* テキストの折り返しを防ぐ */
+}
+
+header a {
+    text-decoration: none; /* リンクの下線を削除 */ 
+    color: black
+}
+
+
+.block{
+    display: flex;
+    background-color: white;
+    width: clamp(18.75rem, 7.386rem + 56.82vw, 50rem);
+    height: 100px;
+    margin-top: 25px;
+    border-radius: 20px;
+}
+
+.summary{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    height: 100%;
+}
+
+.problem_number{
+    display: flex;
+    align-items: center;
+    height: 60%;
+    margin: 0;
+    font-size: 20px;
+}
+
+.problem_number img{
+    height: 70%;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.problem_number h4{
+    width: 100%;
+    margin: 0;
+    margin-top: 5px;
+    margin-left: 20px;
+    font-size: clamp(1.125rem, 0.966rem + 0.8vw, 1.563rem);
+}
+
+meter{
+    display: inline-block;
+    width: 70%;
+    height: clamp(0.625rem, 0.398rem + 1.14vw, 1.25rem);
+    margin-right: 15px;
+}
+
+.stage{
+    display: flex;
+    align-items: center;
+    margin: 10px;
+    height: auto;
+}
+
+.stage h5{
+    margin: 0;
+    font-size: 16px;
+}
+
+
+
+.buttons{
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    height: 100%;
+}
+
+.buttons button{
+    font-weight: 900;
+    height: 50%;
+    color: white;
+    border-radius: 10px;
+}

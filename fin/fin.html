@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>シスタン-結果</title>
+        <link rel="stylesheet" href="../styles.css">
+        <link rel="stylesheet" href="../reset.css">
+        <script src="fin.js" defer></script>
+    </head>
+    <body>
+      <div class="fin">
+        <h1>結果発表</h1> 
+        <table style="width: 90vw; height: 20vh; margin-left: 5vw; font-size: clamp(1.75rem, 1.25rem + 2.5vw, 3.125rem);" border="1">
+          <tr>
+              <td style="width: 45vw;">正解数</td><td style="width: 45vw;">間違えた数</td>
+          </tr>
+          <tr>
+              <td id="result"></td><td id="result"></td>
+          </tr>
+        </table> 
+        <a href="questions/questions.html" target="_blank">問題一覧へ</a>
+        <button onClick="miss_kuizu('../kuizu/kuizu.html')">間違えた問題を復習</button>
+        <button onClick="to_Home('../Home/Home.html')">初めの画面に戻る</button>
+      </div>
+    </body>
+</html>
