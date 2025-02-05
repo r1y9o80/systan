@@ -10,7 +10,7 @@ try {
         $user_id = $_POST["id"] ?? '';
         $user_pw = $_POST["pw"] ?? '';
         // SQLから、入力したIDの人のパスワードを取得(SELECTでヒット項目がなければ"")
-        $sql = $pdo->prepare("SELECT pw FROM user_data WHERE id = ?");
+        $sql = $pdo->prepare("SELECT pw FROM user_data WHERE BINARY id = ?");
         $sql->execute([$user_id]);
         $get_pw = $sql->fetch(PDO::FETCH_ASSOC);
 
@@ -46,8 +46,8 @@ try {
     </header>
     
     <div class="form_div">
+        <h4 class="form_title">ログイン</h4>
         <form action="" method="POST" class="form">
-            <h4 class="form_title">ユーザー登録</h4>
             <?php if ($error_content): ?>
                 <div id="error_message" class="error_message" style = display:none><?php echo htmlspecialchars($error_content); ?></div>
                 <script>
@@ -57,27 +57,30 @@ try {
                 </script>
             <?php endif; ?>
             <fieldset>
-                <label class="form_text" for="id">ID(名前)を入力(4文字以上10文字以内)</label>
-                <p class="error" id="id_error"></p>
-                <input id="id" name="id" type="text" placeholder="ID">
+                <label class="form_text" for="id">ID(4文字以上10文字以内)</label>
+                <input class = "input" id="id" name="id" type="text" placeholder="ID">
+                <div class="error_div">
+                    <p for = "id" class="error" id="id_error"></p>
+                </div>
             </fieldset>
             <fieldset>
                 <label class="form_text" for="pw">パスワード(4文字以上15文字以内)</label>
-                <p class="error" id="pw_error"></p>
-                <input id="pw" name="pw" type="password" placeholder="パスワード">
+                <input class = "input" id="pw" name="pw" type="password" placeholder="パスワード">
+                <div class="error_div">
+                    <p class="error" id="pw_error"></p>
+                </div>
             </fieldset>
-            
             <button id="loginButton" type="submit" class="button">登録</button>
             <a href="../register/register.php" class="register_href">新規登録</a>
         </form>
     </div>
 
-    <!-- <footer>
+    <footer>
         <ul>
-            <li>ユーザー情報はテキトーに管理しています</li>
+            <li>これは、システム英単語に対応した、英単語クイズアプリです。インプットに使うもよし、アウトプットに使うもよし、これを使って効率よく単語を覚えましょう!!</li>
             <li>情報漏洩しないことを期待しないでください</li>
         </ul>
-    </footer> -->
+    </footer>
 
     <script>
         document.querySelector(".form").addEventListener('submit', (event) => {
@@ -92,7 +95,7 @@ try {
             if (!/^[a-zA-Z0-9]{4,10}$/.test(input_id)) {
                 event.preventDefault();
                 id_error.textContent = "";
-                setTimeout(() => { id_error.textContent = "条件を満たしていません"; }, 100);
+                setTimeout(() => { id_error.textContent = "id条件を満たしていません"; }, 100);
                 hasError = true;
             } else {
                 id_error.textContent = "";
@@ -102,7 +105,7 @@ try {
             if (!/^[a-zA-Z0-9]{4,15}$/.test(input_pw)) {
                 event.preventDefault();
                 pw_error.textContent = "";
-                setTimeout(() => { pw_error.textContent = "条件を満たしていません"; }, 100);
+                setTimeout(() => { pw_error.textContent = "pw条件を満たしていません"; }, 100);
                 hasError = true;
             } else {
                 pw_error.textContent = "";

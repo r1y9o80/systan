@@ -12,24 +12,31 @@ document.addEventListener("DOMContentLoaded", () => {
             window.location.href = `stage${index + 1}.html`;
         });
     });
-});
 
 
-//現在開いているHTMLの情報を取得
-const learn_nuttons = document.querySelectorAll("#learn_button")?? "";
-const list_button = document.querySelectorAll(".list_button")?? "";
+    // 現在開いているHTMLの情報を取得
+    const learn_buttons = document.querySelectorAll(".learn_button");
+    const list_buttons = document.querySelectorAll(".list_button");
 
-console.log(list_button)
+    // ボタンの共通処理
+    function handleButtonClick(buttons, href) {
+        buttons.forEach((btn) => {
+            btn.addEventListener('click', (event) => {
+                // そのレベル番号
+                const numberValue = parseInt(event.target.dataset.number, 10);
+                // そのレベルの最初の問題番号
+                const start_number = (numberValue - 1) * 20 + 1;
+                console.log(start_number)
+                localStorage.setItem("start_number", start_number);
+                window.location.href = href;
+            });
+        });
+    }
 
-const data = require('../data.json')
-list_button.addEventListener('click', (event) => {
-    // data-number属性から値を取得する（文字列なので数値に変換）
-    const numberValue = parseInt(event.target.dataset.number, 10);
-    // 1を引いた値を計算
-    const label_number = numberValue - 1;
-    // ローカルストレージに保存
-    localStorage.setItem("label_number", label_number);
-    // 別ページにリダイレクト
-    window.location.href = "../list/list.html";
+    // 各ボタンの処理
+    handleButtonClick(learn_buttons, "../kuizu/kuizu.html");
+    handleButtonClick(list_buttons, "../list/list.html");
+
+
 });
 

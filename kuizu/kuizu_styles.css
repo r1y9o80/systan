@@ -1,0 +1,44 @@
+body, #questions_div, #buttons_div {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+.header{
+    font-display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    width: 100vw;
+    border-bottom: 3px solid grey;
+    padding-left: 40px;
+}
+
+#questions_div{
+    justify-content: center;
+    /* background-color: aqua; */
+    height: 35vh;
+}
+
+.question{
+    padding: 10%;
+    font-size: 30px;
+}
+
+#buttons_div{
+    /* background-color: blue; */
+    height: 55vh;
+}
+
+.button{
+    margin: 0;
+    width: 94%;
+    height: 15%;
+    margin-top: 4px;
+    border: 1px solid black;
+    border-radius: 5px;
+}

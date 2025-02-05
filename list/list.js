@@ -1,67 +1,27 @@
-const lebel_number = localStorage.getItem("lebel_number")
-const tbody = document.querySelector("tbody")
-const data = require("../data.json")
+document.addEventListener("DOMContentLoaded", async () => {
+    const start_number = parseInt(localStorage.getItem("start_number")); // 押されたリストボタンが何個目を取得しスタート番号を計算した値
+    const tbody = document.querySelector("tbody");
 
-const element  = `
-            <tr>
-                <td>${data[lebel_number+0][0]}</td><td>${data[lebel_number+0][1]}</td>
-            </tr>
-            <tr>
-                <td>${data[lebel_number+1][0]}</td><td>${data[lebel_number+1][1]}</td>
-            </tr>
-            <tr>
-                <td>${data[lebel_number+2][0]}</td><td>${data[lebel_number+2][1]}</td>
-            </tr>
-            <tr>
-                <td>${data[lebel_number+3][0]}</td><td>${data[lebel_number+3][1]}</td>
-            </tr>
-            <tr>
-                <td>${data[lebel_number+4][0]}</td><td>${data[lebel_number+4][1]}</td>
-            </tr>
-             <tr>
-                <td>${data[lebel_number+5][0]}</td><td>${data[lebel_number+5][1]}</td>
-            </tr>
-            <tr>
-                <td>${data[lebel_number+6][0]}</td><td>${data[lebel_number+6][1]}</td>
-            </tr>
-            <tr>
-                <td>${data[lebel_number+7][0]}</td><td>${data[lebel_number+7][1]}</td>
-            </tr>
-            <tr>
-                <td>${data[lebel_number+8][0]}</td><td>${data[lebel_number+8][1]}</td>
-            </tr>
-            <tr>
-                <td>${data[lebel_number+9][0]}</td><td>${data[lebel_number+9][1]}</td>
-            </tr>
-            <tr>
-                <td>${data[lebel_number+10][0]}</td><td>${data[lebel_number+10][1]}</td>
-            </tr>
-            <tr>
-                <td>${data[lebel_number+11][0]}</td><td>${data[lebel_number+11][1]}</td>
-            </tr>
-            <tr>
-                <td>${data[lebel_number+12][0]}</td><td>${data[lebel_number+12][1]}</td>
-            </tr>
-            <tr>
-                <td>${data[lebel_number+13][0]}</td><td>${data[lebel_number+13][1]}</td>
-            </tr>
-            <tr>
-                <td>${data[lebel_number+14][0]}</td><td>${data[lebel_number+14][1]}</td>
-            </tr>
-             <tr>
-                <td>${data[lebel_number+15][0]}</td><td>${data[lebel_number+15][1]}</td>
-            </tr>
-            <tr>
-                <td>${data[lebel_number+16][0]}</td><td>${data[lebel_number+16][1]}</td>
-            </tr>
-            <tr>
-                <td>${data[lebel_number+17][0]}</td><td>${data[lebel_number+17][1]}</td>
-            </tr>
-            <tr>
-                <td>${data[lebel_number+18][0]}</td><td>${data[lebel_number+18][1]}</td>
-            </tr>
-            <tr>
-                <td>${data[lebel_number+19][0]}</td><td>${data[lebel_number+19][1]}</td>
-            </tr>
-            `
-tbody.append(element)
+    try {
+        // JSONデータをフェッチして待つ
+        const response = await fetch("../data.json");
+        const data = await response.json();  // 正しくjsonメソッドを使う
+
+        console.log(start_number);  // 確認用
+        console.log(data);
+
+        // 要素を追加
+        let element = "";
+        for (let i = 0; i < 20; i++) {
+            element += `
+                <tr>
+                    <td>${start_number + i}</td><td>${data[start_number + i][0]}</td><td>${data[start_number + i][1]}</td>
+                </tr>
+            `;
+        }
+
+        tbody.innerHTML = element;
+    } catch (error) {
+        console.error("データの読み込みに失敗しました:", error);
+    }
+});

@@ -50,13 +50,17 @@ try {
             <h4 class="form_title">ユーザー登録</h4>
             <fieldset>
                 <label class="form_text" for="id">ID(名前)を入力(最大10文字)</label>
-                <p class="error" id="id_error"></p>
                 <input id="id" name="id" type="text" placeholder="ID">
+                <div class="error_div">
+                    <p for = "id" class="error" id="id_error"></p>
+                </div>
             </fieldset>
             <fieldset>
                 <label class="form_text" for="pw">パスワード(4文字以上15文字以内)</label>
-                <p class="error" id="pw_error"></p>
                 <input id="pw" name="pw" type="password" placeholder="パスワード">
+                <div class="error_div">
+                    <p class="error" id="pw_error"></p>
+                </div>
             </fieldset>
             <fieldset>
                 <label class="form_text" for="pw_confirm">パスワード確認</label>
@@ -86,7 +90,7 @@ try {
         if (!/^[a-zA-Z0-9]{4,10}$/.test(input_id)) {
             event.preventDefault();
             id_error.textContent = ""
-            setTimeout(()=>{id_error.textContent = "条件を満たしていません"},100);
+            setTimeout(()=>{id_error.textContent = "id条件を満たしていません"},100);
             hasError = true;
         } else {
             id_error.textContent = "";
@@ -96,7 +100,7 @@ try {
         if (!/^[a-zA-Z0-9]{4,15}$/.test(input_pw)) {
             event.preventDefault();
             pw_error.textContent = ""
-            setTimeout(()=>{pw_error.textContent = "条件を満たしていません"},100);
+            setTimeout(()=>{pw_error.textContent = "pw条件を満たしていません"},100);
             hasError = true;
         } else if (input_pw !== input_pw_confirm) {
             event.preventDefault();

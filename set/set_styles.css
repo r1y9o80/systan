@@ -48,6 +48,10 @@ header a {
     height: 100%;
 }
 
+.lebel_span{
+    color: brown;
+}
+
 .problem_number{
     display: flex;
     align-items: center;
@@ -70,9 +74,9 @@ header a {
     font-size: clamp(1.125rem, 0.966rem + 0.8vw, 1.563rem);
 }
 
-meter{
+.meter{
     display: inline-block;
-    width: 70%;
+    width: 60%;
     height: clamp(0.625rem, 0.398rem + 1.14vw, 1.25rem);
     margin-right: 15px;
 }
