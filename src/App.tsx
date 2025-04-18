@@ -1,5 +1,3 @@
-import React from "react";
-import { useState } from 'react'
 import { useRecoilValue } from "recoil";
 import { sectionState } from "./states/section.ts"
 import Setting from "./setting/setting"

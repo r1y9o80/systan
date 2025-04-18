@@ -1,4 +1,3 @@
-import React from "react";
 import { useState, memo } from "react"
 import Header from "./header/header"
 import Body from "./body/body"
