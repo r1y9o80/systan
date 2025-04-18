@@ -1,0 +1,71 @@
+:root {
+    --radius-size: 6px; 
+  }
+
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+
+.body {
+    background-color: rgb(238, 238, 238);
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    width: 100vw;
+    height: 100vh; /* 親要素の高さを確保 */
+    white-space: nowrap;
+    overflow-y: auto;
+}
+
+.block{
+    background-color: white;
+    display: grid;
+    width: 500px;
+    height: 100px;
+    margin: 20px;
+    border-radius: var(--radius-size);
+    grid-template: 
+        "img title button1" 16.666%
+        "img title button1" 16.666%
+        "img meter button1" 16.666%
+        "img meter button2" 16.666%
+        "img subtitle button2" 16.666%
+        "img subtitle button2" 16.666%
+        /10% 80% 10%;
+}
+
+.img{
+    grid-area: img;
+    width: 80%;
+    height: 80%;
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+.title{
+    grid-area: title;
+    margin: 5px;
+    font-size: 15px;
+}
+
+.meter{
+    grid-area: meter;
+}
+
+.subtitle{
+    grid-area: subtitle;
+}
+
+.button1{
+    grid-area: button1;
+    border-radius: 0 var(--radius-size) 0 0;
+}
+
+.button2{
+    grid-area: button2;
+    border-radius: 0 0 var(--radius-size) 0;
+}

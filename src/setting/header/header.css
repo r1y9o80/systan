@@ -1,0 +1,32 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: rgb(238, 238, 238);
+    margin: 0;
+    width: 100%; /* ヘッダー全体の幅を親要素に合わせる */
+    overflow-x: auto; /* 横スクロールを許可 */
+    border-bottom: 2px solid rgb(224, 224, 224);
+}
+
+
+header ul {
+    display: flex; /* フレックスボックスに変更 */
+    justify-content: flex-start; /* 左寄せ */
+    align-items: center; /* 垂直方向中央揃え */
+    padding: 10px;
+    list-style: none; /* リストの点を削除 */
+    white-space: nowrap; /* テキストの折り返しを防ぐ */
+    overflow-x: auto; /* はみ出た場合に横スクロールを許可 */
+    gap: 10px;
+}
+
+header li {
+    /* background-color: aqua; */
+    white-space: nowrap; /* テキストの折り返しを防ぐ */
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
