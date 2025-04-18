@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "deploy": "gh-pages -d dist"
   },
-  "homepage": "https://github.com/r1y9o80/systan",
+  "homepage": "https://r1y9o80.github.io/systan",
   "dependencies": {
     "@types/recoil": "^0.0.1",
     "react": "^18.3.1",
