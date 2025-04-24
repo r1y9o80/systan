@@ -3,7 +3,7 @@ import { memo } from "react";
 import "./header.css";
 import { init } from "../setting_data/data";
 
-const Header: React.FC<{ selectedKey: string, setSelectedKey: React.Dispatch<React.SetStateAction<string>> }> = memo(({ selectedKey, setSelectedKey }) => {
+export const Header: React.FC<{ selectedKey: string, setSelectedKey: React.Dispatch<React.SetStateAction<string>> }> = memo(({ selectedKey, setSelectedKey }) => {
 
   const handleClick = (e: React.MouseEvent<HTMLLIElement>, key: string) => {
     setSelectedKey(key);
@@ -23,4 +23,3 @@ const Header: React.FC<{ selectedKey: string, setSelectedKey: React.Dispatch<Rea
   );
 });
 
-export default Header;

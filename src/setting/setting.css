@@ -1,0 +1,10 @@
+#setting{
+    background-color: blue;
+    display: flex;
+    flex-direction: column;
+    justify-content: strat;
+    align-items: center;
+    width: 100vw;
+    height: 100vh; /* 親要素の高さを確保 */
+    overflow: hidden;
+}

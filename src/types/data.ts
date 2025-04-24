@@ -2,7 +2,8 @@ export type Data = {
     data: string,
     title: string,
     subtitle: string,
-    initial: number,
+    startItem: number,
     perItem: number,
     total: number,
+    NumOfChoice: number
 }

@@ -24,7 +24,7 @@
 .block{
     background-color: white;
     display: grid;
-    width: 500px;
+    width: clamp(16.875rem, 15.536rem + 4.29vw, 18.75rem);
     height: 100px;
     margin: 20px;
     border-radius: var(--radius-size);
@@ -33,9 +33,9 @@
         "img title button1" 16.666%
         "img meter button1" 16.666%
         "img meter button2" 16.666%
-        "img subtitle button2" 16.666%
-        "img subtitle button2" 16.666%
-        /10% 80% 10%;
+        "subtitle subtitle button2" 16.666%
+        "subtitle subtitle button2" 16.666%
+        /10% 75% 15%;
 }
 
 .img{

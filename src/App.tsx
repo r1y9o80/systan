@@ -1,7 +1,8 @@
 import { RecoilRoot } from "recoil";
 import { useRecoilValue } from "recoil";
 import { sectionState } from "./states/section.ts";
-import Setting from "./setting/setting";
+import { Setting } from "./setting/setting.tsx";
+import { Kuizu } from "./kuizu/kuizu.tsx"
 
 function App() {
   const section: string = useRecoilValue(sectionState);
@@ -9,6 +10,7 @@ function App() {
   return (
     <>
       {section === "setting" && <Setting />}
+      {section === "kuizu" && <Kuizu />}
     </>
   );
 }
