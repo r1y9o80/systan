@@ -1,4 +1,4 @@
-import "./kuizu.css";
+import "./kuizu.scss";
 import { useState, useEffect } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { sectionState } from "../states/section";
@@ -7,6 +7,7 @@ import { useGetJsonData } from "../Hooks/useGetJsonData";
 import { useCorrectJudge } from "../Hooks/correctJudge";
 import { useQuizGenerator } from "../Hooks/QuizGenerator";
 import type { TypeQuizInfo, TypeMixData, TypeQuizState } from "../types/Quiz"
+
 
 export const Kuizu = () => {
   const setSection = useSetRecoilState(sectionState)
@@ -52,11 +53,13 @@ export const Kuizu = () => {
 
   return (
     <div id="kuizu">
+      
       <header id="header">
         <h4 id="header_title">[英単語]ステージ1_1</h4>
         <h4 id="header_numbers">{`${numOfQuestion}`}/20</h4>
         <button id="header_button" onClick={() => setSection("setting")}>終</button>
       </header>
+
       <div id = "body" onClick={handleBodyClick}>
         <div id="questions_div" style={{ backgroundColor }}>
           <h4 id="question">{questionData[correctIdx]?.Value[0]}</h4>

@@ -1,4 +1,4 @@
-export type QuestionEntry = {
+type QuestionEntry = {
   Key: number;
   Value: string[];
 };
