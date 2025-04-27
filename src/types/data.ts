@@ -1,5 +1,5 @@
 export type Data = {
-    data: string,
+    dataName: string,
     img: string,
     title: string,
     subtitle: string,

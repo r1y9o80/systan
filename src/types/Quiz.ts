@@ -1,7 +1,7 @@
-export type TypeQuizInfo = { dataName: string, startItem: number, perItem: number, NumOfChoice: number }
+export type TypeMixData = {[Key: string]: string[]} | undefined
 
-export type TypeMixData = {[Key: number | string]: string[]} | undefined
+export type TypeQuizInfo = { data: TypeMixData, numOfNormalChoices: number }
 
-export type TypeQuizState = {questionData: {Key: number | string, Value: string[]}[], correctIdx: number, numOfQuestion: number}
+export type TypeQuizState = {filtered_Keys: string[],correctKey: string, numOfQuestion: number}
 
 

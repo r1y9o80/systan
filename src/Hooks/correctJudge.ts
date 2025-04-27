@@ -1,5 +1,5 @@
 //ボタンが押されたときに正誤を判断
-export const useCorrectJudge = (correctIdx: number, inputIdx: number, setScreenState: React.Dispatch<React.SetStateAction<string>>) => {
+export const useCorrectJudge = (correctIdx: string, inputIdx: string, setScreenState: React.Dispatch<React.SetStateAction<string>>) => {
     if(correctIdx === inputIdx){
         setScreenState("ConfirmedTrue")
         const audio = new Audio("/mp/correct.mp3")
