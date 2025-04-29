@@ -16,18 +16,18 @@ export const Result = () => {
         if(inputKey == correctKey){
             if(showOnlyWrong) return
             return(
-                <>
+                <ul key={QuestionNumber} className='resultUl'>
                   <li className='resultLi'><h2 className='QuestionNumber' >{QuestionNumber}　</h2><p className='resultP'>　{data[correctKey][0]}</p></li>
                   <li className='resultLi'><h2 className='QuestionNumber' style={{color: "blue"}}>✓　</h2><p className='resultP'>　{data[inputKey][1]}</p></li>
-                </>
+                </ul>
             )
         }else{
             return(
-                <>
+                <ul key={QuestionNumber} className='resultUl'>
                   <li className='resultLi'><h2 className='QuestionNumber'>{QuestionNumber}　</h2><p className='resultP'>　{data[correctKey][0]}</p></li>
                   <li className='resultLi'><h2 className='QuestionNumber' style={{color: "red"}}>✕　</h2><p className='resultP'>　{data[inputKey][1]}</p></li>
                   <li className='resultLi'><h2 className='QuestionNumber' style={{color: "blue"}}>✓　</h2><p className='resultP'>　{data[correctKey][1]}</p></li>
-                </>
+                </ul>
             )
         }
     }
@@ -45,9 +45,7 @@ export const Result = () => {
                 </div>
                 {result.map((ele: TypeResult,i) => {
                     return(
-                        <ul key={i} className='resultUl'>
-                            {list_retrun(i+1, ele.inputKey, ele.correctKey)}
-                        </ul>
+                        list_retrun(i+1, ele.inputKey, ele.correctKey)
                     )
                 })}
             </div>
