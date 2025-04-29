@@ -1,4 +1,4 @@
-import "./setting.css"
+import "./setting.scss"
 import { memo } from "react"
 import {useRecoilState} from "recoil"
 import { setting_header } from "../states/setting_header"

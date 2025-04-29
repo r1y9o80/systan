@@ -1,3 +1,5 @@
+@use '../../styles/variables' as *;
+
 $radius-size: 6px;
 $header_height: 50px;
 
@@ -12,7 +14,7 @@ $header_height: 50px;
     align-items: center;
 }
 
-.body {
+#SettingBody {
     background-color: rgb(238, 238, 238);
     display: flex;
     flex-direction: column;
@@ -27,7 +29,7 @@ $header_height: 50px;
 .block {
     background-color: white;
     display: grid;
-    width: clamp(19.375rem, 16.193rem + 15.91vw, 28.125rem); //320~375
+    width: $global-display-Width; //320~375
     height: clamp(5.625rem, -2.125rem + 13.33vw, 6.875rem); //85~110
     margin: 20px;
     border-radius: $radius-size;
