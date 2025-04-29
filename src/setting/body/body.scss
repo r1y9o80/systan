@@ -29,7 +29,7 @@ $header_height: 50px;
 .block {
     background-color: white;
     display: grid;
-    width: $global-display-Width; //320~375
+    width: calc(($global-display-Width) - 20px); //320~375
     height: clamp(5.625rem, -2.125rem + 13.33vw, 6.875rem); //85~110
     margin: 20px;
     border-radius: $radius-size;

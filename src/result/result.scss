@@ -1,6 +1,6 @@
 @use '../styles/variables' as *;
 
-$bodyPercentage: 83;  // 単位なし
+$bodyPercentage: 80;  // 単位なし
 
 #result {
     display: flex;
@@ -19,6 +19,7 @@ $bodyPercentage: 83;  // 単位なし
     height: #{$bodyPercentage}svh;  // svhをここで付ける
     white-space: normal;
     overflow-y: auto;  // scroll→autoにするとさらに良い
+    overflow-x: hidden;
 }
 
 .pie-chart-1 {
@@ -42,9 +43,12 @@ $bodyPercentage: 83;  // 単位なし
 }
 
 .resultUl {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 100%;
     height: 20%;
-    margin-bottom: 20px;
+    margin-bottom: 50px;
 }
 
 .resultLi {
@@ -52,10 +56,15 @@ $bodyPercentage: 83;  // 単位なし
     justify-content: end;
     align-items: end;
     list-style: none;
-    width: 100%;
-    margin-left: 20px;
-    margin-right: 20px;
+    width: 95%;
     border-bottom: 2px solid gray;
+}
+
+
+.QuestionNumber {
+    display: inline;
+    width: 10%;
+    font-size: 25px;
 }
 
 .resultP {
@@ -63,14 +72,9 @@ $bodyPercentage: 83;  // 単位なし
     padding: 0;
     text-align: left;
     width: 90%; // 必要なら90%→100%に調整
+    font-size: 20px;
   }
-  
-  
 
-.QuestionNumber {
-    display: inline;
-    width: 10%;
-}
 
 .footer {
     display: flex;
@@ -94,6 +98,6 @@ $bodyPercentage: 83;  // 単位なし
     color: white;
     display: block;
     width: 80%;
-    height: 50%;
+    height: 60%;
     border-radius: 10px;
 }
