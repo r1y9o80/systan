@@ -12,21 +12,21 @@ export const Result = () => {
     const {data, result, CorrectPercentage} = QuizResult
     if (!data) return <div>データが見つかりません</div>
 
-    const list_retrun = (QuestionNumber: number,inputKey:string, correctKey: string) =>{
+    const list_retrun = (QuestionNumber: number, choices:string[], inputKey:string, correctKey: string) =>{
         if(inputKey == correctKey){
             if(showOnlyWrong) return
             return(
                 <ul key={QuestionNumber} className='resultUl'>
                   <li className='resultLi'><h2 className='QuestionNumber' >{QuestionNumber}　</h2><p className='resultP'>　{data[correctKey][0]}</p></li>
-                  <li className='resultLi'><h2 className='QuestionNumber' style={{color: "blue"}}>✓　</h2><p className='resultP'>　{data[inputKey][1]}</p></li>
+                  <li className='resultLi'><h2 className='QuestionNumber' style={{color: "blue"}}>✓　</h2><p className='resultP'>　{data[inputKey][1]}{choices[3] === inputKey && "(この中にはない)"}</p></li>
                 </ul>
             )
         }else{
             return(
                 <ul key={QuestionNumber} className='resultUl'>
                   <li className='resultLi'><h2 className='QuestionNumber'>{QuestionNumber}　</h2><p className='resultP'>　{data[correctKey][0]}</p></li>
-                  <li className='resultLi'><h2 className='QuestionNumber' style={{color: "red"}}>✕　</h2><p className='resultP'>　{data[inputKey][1]}</p></li>
-                  <li className='resultLi'><h2 className='QuestionNumber' style={{color: "blue"}}>✓　</h2><p className='resultP'>　{data[correctKey][1]}</p></li>
+                  <li className='resultLi'><h2 className='QuestionNumber' style={{color: "red"}}>✕　</h2><p className='resultP'>　{data[inputKey][1]}{choices[3] === inputKey && "(この中にはない)"}</p></li>
+                  <li className='resultLi'><h2 className='QuestionNumber' style={{color: "blue"}}>✓　</h2><p className='resultP'>　{data[correctKey][1]}{choices[3] === correctKey && "(この中にはない)"}</p></li>
                 </ul>
             )
         }
@@ -46,7 +46,7 @@ export const Result = () => {
                 </div>
                 {result.map((ele: TypeResult,i) => {
                     return(
-                        list_retrun(i+1, ele.inputKey, ele.correctKey)
+                        list_retrun(i+1, ele.choices, ele.inputKey, ele.correctKey)
                     )
                 })}
             </div>
