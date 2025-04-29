@@ -55,7 +55,7 @@ export const init:  { [key: string]: Data } = {
         dataName: "kobun-data",
         img: "kobun-tango-Img",
         title: "[古単]",
-        subtitle: "[古単]]ステージ1　(level-1)",
+        subtitle: "[古単]ステージ1　(level-1)",
         startItem: 1,
         perItem: 20,
         total: 13,
