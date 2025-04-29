@@ -38,7 +38,8 @@ export const Result = () => {
                 <div key={"resultgraf"} className="pie-chart-1" style={{backgroundImage: `conic-gradient(#2589d0 ${CorrectPercentage}%,rgb(245, 100, 100) ${CorrectPercentage}% 100%)`}}>
                     <span>{`${CorrectPercentage}%`}</span>
                 </div>
-                <div style={{ marginBottom: '20px' }}>
+                <div className='toggle-div'>
+                    <p className='toggle-p'>間違えた問題だけ表示</p>
                     <label className="toggle-button-1">
                         <input type="checkbox" checked={showOnlyWrong} onChange={() => setShowOnlyWrong(prev => !prev)}/>
                     </label>
