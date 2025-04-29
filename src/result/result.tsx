@@ -14,8 +14,8 @@ export const Result = () => {
         if(inputKey == correctKey){
             return(
                 <>
-                  <li className='resultLi'><h2 className='QuestionNumber' >{QuestionNumber}　</h2><p className='resultP'>　{data[correctKey][0]}</p></li>
-                  <li className='resultLi'><h2 className='QuestionNumber' style={{color: "blue"}}>✓　</h2><p className='resultP'>　{data[inputKey][1]}</p></li>
+                  {/* <li className='resultLi'><h2 className='QuestionNumber' >{QuestionNumber}　</h2><p className='resultP'>　{data[correctKey][0]}</p></li>
+                  <li className='resultLi'><h2 className='QuestionNumber' style={{color: "blue"}}>✓　</h2><p className='resultP'>　{data[inputKey][1]}</p></li> */}
                 </>
             )
         }else{

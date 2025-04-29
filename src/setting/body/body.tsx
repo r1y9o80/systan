@@ -39,7 +39,7 @@ export const Body: React.FC<{selectedKey: string}> = memo(({ selectedKey }) => {
                         <div className="meter_div"><h4 className="meter_h4"><meter className="meter" value="100" min="0" max="100"></meter>　100%</h4></div>
                         <div className="subtitle_div"><h5 className="subtitle">{subtitle}<span className="label_span"></span></h5></div>
                         <button className="button1" onClick = {() => transKuizu(dataName, start, perItem, NumOfChoice, this_title)}>学習</button>
-                        <button className="button2" onClick={() => setSection("null")}>一覧</button>
+                        <button className="button2" onClick={() => setSection("list")}>一覧</button>
                     </div>
                 )
             })}
