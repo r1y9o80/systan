@@ -18,15 +18,15 @@ export const Result = () => {
             return(
                 <ul key={QuestionNumber} className='resultUl'>
                   <li className='resultLi'><h2 className='QuestionNumber' >{QuestionNumber}　</h2><p className='resultP'>　{data[correctKey][0]}</p></li>
-                  <li className='resultLi'><h2 className='QuestionNumber' style={{color: "blue"}}>✓　</h2><p className='resultP'>　{data[inputKey][1]}{choices[3] === inputKey && "(この中にはない)"}</p></li>
+                  <li className='resultLi'><h2 className='QuestionNumber' style={{color: "blue"}}>✓　</h2><p className='resultP'>　{data[inputKey][1]}{choices[3] === inputKey && "　(この中にはない)"}</p></li>
                 </ul>
             )
         }else{
             return(
                 <ul key={QuestionNumber} className='resultUl'>
                   <li className='resultLi'><h2 className='QuestionNumber'>{QuestionNumber}　</h2><p className='resultP'>　{data[correctKey][0]}</p></li>
-                  <li className='resultLi'><h2 className='QuestionNumber' style={{color: "red"}}>✕　</h2><p className='resultP'>　{data[inputKey][1]}{choices[3] === inputKey && "(この中にはない)"}</p></li>
-                  <li className='resultLi'><h2 className='QuestionNumber' style={{color: "blue"}}>✓　</h2><p className='resultP'>　{data[correctKey][1]}{choices[3] === correctKey && "(この中にはない)"}</p></li>
+                  <li className='resultLi'><h2 className='QuestionNumber' style={{color: "red"}}>✕　</h2><p className='resultP'>　{data[inputKey][1]}{choices[3] === inputKey && "　(この中にはない)"}</p></li>
+                  <li className='resultLi'><h2 className='QuestionNumber' style={{color: "blue"}}>✓　</h2><p className='resultP'>　{data[correctKey][1]}{choices[3] === correctKey && "　(この中にはない)"}</p></li>
                 </ul>
             )
         }
