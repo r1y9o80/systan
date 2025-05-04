@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from "react";
 import { memo } from "react";
 import "./header.css";
 import { init } from "../setting_data/data";
+import { auth } from "../../firebase";
 
 export const Header: React.FC<{ selectedKey: string, setSelectedKey: React.Dispatch<React.SetStateAction<string>> }> = memo(({ selectedKey, setSelectedKey }) => {
   const itemRefs = useRef<{ [key: string]: HTMLLIElement | null }>({});
@@ -28,6 +29,7 @@ export const Header: React.FC<{ selectedKey: string, setSelectedKey: React.Dispa
   return (
     <header>
       <ul className="scrollable-list">
+        <li style={{color:"blue"}}onClick={() => auth.signOut() }>ログアウト</li>
         {Object.entries(init).map(([stageKey, _], index) => (
           <li
             key={index}
