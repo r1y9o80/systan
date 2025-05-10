@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState, useRef } from "react";
+import React, { memo, useEffect, useState } from "react";
 
 // 状態管理(Recoil関連)
 import { useSetRecoilState } from "recoil";
