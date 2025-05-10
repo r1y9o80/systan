@@ -1,5 +1,5 @@
 import "./kuizu.scss";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef} from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { sectionState } from "../states/section";
 import { QuizResultState } from "../states/QuizResult";
@@ -8,6 +8,7 @@ import { pre_Stage_percentageArray } from "../states/pre-Stage-percentagesArray"
 import { useCorrectJudge } from "../Hooks/correctJudge";
 import { useQuizGenerator } from "../Hooks/QuizGenerator";
 import { useSavePercentage } from "../Hooks/Save-Percentage";
+import { useEnglish_read } from "../Hooks/English-read";
 import type { TypeQuizInfo, TypeQuizState } from "../types/Quiz"
 import type { TypeResult, TypeResultData } from "../types/Quiz_Result";
 
@@ -33,14 +34,15 @@ export const Kuizu = () => {
   
   const { filtered_Keys,correctKey, numOfQuestion } = quizState;
 
+  
   const backgroundColor = screenState === "ConfirmedTrue" ? "rgba(0, 153, 248, 0.403)" : 
-                        screenState === "ConfirmedFalse" ? "rgba(255, 115, 103, 0.885)" : "transparent";
-
+  screenState === "ConfirmedFalse" ? "rgba(255, 115, 103, 0.885)" : "transparent";
+  
   const buttonStyle = (key:string) => {
     if(screenState === "ConfirmedTrue" && key === correctKey) return {backgroundColor: "rgba(0, 153, 248, 0.403)"}
     if(screenState === "ConfirmedFalse" && key === correctKey) return {backgroundColor: "rgba(255, 115, 103, 0.885)"}
   }
-
+  
   // ボタンクリック時に正誤を判断し、それに応じてscreen状態を変更
   const handleButtonClick = (inputKey: string) => {
     if (screenState === "solved") {
@@ -50,7 +52,7 @@ export const Kuizu = () => {
       console.log(result)
     }
   };
-
+  
   // ボタン後の確認画面時に、次の問題へ進む+screen状態を変更
   const handleBodyClick = async () => {
     if (screenState !== "ConfirmedTrue" && screenState !== "ConfirmedFalse") return;
@@ -67,7 +69,8 @@ export const Kuizu = () => {
       setScreenState("solved");
     }
   };
-  
+
+  if(screenState==="solved")useEnglish_read(data[correctKey][0])
 
   return (
     <div id="kuizu">
@@ -82,7 +85,6 @@ export const Kuizu = () => {
         <div id="questions_div" style={{ backgroundColor }}>
           <h4 id="question">{data[correctKey][0]}</h4>
         </div>
-
         <div id="buttons_div">
           {Array.from({ length: unKnow_Buttn? numOfChoice-1 : numOfChoice }).map((_, i) => (<button type="button" className="button" key={`idx${i}`} onClick={() => handleButtonClick(filtered_Keys[i])} style={buttonStyle(filtered_Keys[i])}>{data[filtered_Keys[i]][1]}</button>))}
           {unKnow_Buttn && <button type="button" className="button" onClick={() => handleButtonClick(filtered_Keys[numOfChoice-1])} style={buttonStyle(filtered_Keys[numOfChoice-1])}>この中にはない</button>}
