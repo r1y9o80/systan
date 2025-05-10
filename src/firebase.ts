@@ -3,14 +3,17 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
-const firebaseApp = initializeApp({
-    apiKey: "AIzaSyBOOuLESVy1le8mGEcjhHWtZ3hYoT3VAqE",
-    authDomain: "line-clone-test-2ddef.firebaseapp.com",
-    projectId: "line-clone-test-2ddef",
-    storageBucket: "line-clone-test-2ddef.firebasestorage.app",
-    messagingSenderId: "545439968429",
-    appId: "1:545439968429:web:d3b1e5aa26e6b6c09aaa24"
-})
+const firebaseConfig = {
+    apiKey: "AIzaSyDtJyRyfl-tf82Y8nguh_OEcOLkBylWU70",
+    authDomain: "r1y9o80-quiz-app.firebaseapp.com",
+    projectId: "r1y9o80-quiz-app",
+    storageBucket: "r1y9o80-quiz-app.firebasestorage.app",
+    messagingSenderId: "1071682165928",
+    appId: "1:1071682165928:web:cbfd4cfe9c4887690bf69d"
+  };
+  
+  // Initialize Firebase
+  const firebaseApp = initializeApp(firebaseConfig);
 
 export const auth = getAuth(firebaseApp);
 export const db = getFirestore(firebaseApp);
