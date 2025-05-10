@@ -2,6 +2,7 @@ import { Data } from "../../types/data"
 
 export const init:  { [key: string]: Data } = {
     "[英単語]ステージ1" : {
+        storeId: "0",
         dataName: "systan-data", //参照データファイル
         img: "systan-Img",
         title: "[英単語]", //タイトル
@@ -12,6 +13,7 @@ export const init:  { [key: string]: Data } = {
         NumOfChoice: 3
     },
     "[英単語]ステージ2" : {
+        storeId: "1",
         dataName: "systan-data",
         img: "systan-Img",
         title: "[英単語]",
@@ -22,6 +24,7 @@ export const init:  { [key: string]: Data } = {
         NumOfChoice: 3
     },
     "[英単語]ステージ3" : {
+        storeId: "2",
         dataName: "systan-data",
         img: "systan-Img",
         title: "[英単語]",
@@ -32,6 +35,7 @@ export const init:  { [key: string]: Data } = {
         NumOfChoice: 3
     },
     "[英単語]ステージ4" : {
+        storeId: "3",
         dataName: "systan-data",
         img: "systan-Img",
         title: "[英単語]",
@@ -42,6 +46,7 @@ export const init:  { [key: string]: Data } = {
         NumOfChoice: 3
     },
     "[英単語]ステージ5" : {
+        storeId: "4",
         dataName: "systan-data",
         img: "systan-Img",
         title: "[英単語]",
@@ -52,6 +57,7 @@ export const init:  { [key: string]: Data } = {
         NumOfChoice: 3
     },    
     "[古文単語]ステージ1" : {
+        storeId: "5",
         dataName: "kobun-data",
         img: "kobun-tango-Img",
         title: "[古単]",

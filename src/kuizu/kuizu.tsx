@@ -4,8 +4,10 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { sectionState } from "../states/section";
 import { QuizResultState } from "../states/QuizResult";
 import { QuizInfo } from "../states/kuizu";
+import { pre_Stage_percentageArray } from "../states/pre-Stage-percentagesArray";
 import { useCorrectJudge } from "../Hooks/correctJudge";
 import { useQuizGenerator } from "../Hooks/QuizGenerator";
+import { useSavePercentage } from "../Hooks/Save-Percentage";
 import type { TypeQuizInfo, TypeQuizState } from "../types/Quiz"
 import type { TypeResult, TypeResultData } from "../types/Quiz_Result";
 
@@ -14,7 +16,8 @@ export const Kuizu = () => {
   const unKnow_Buttn = true;
   const setSection = useSetRecoilState(sectionState)
   const setQuizResult = useSetRecoilState(QuizResultState)
-  const { data, numOfNormalChoices, title } = useRecoilValue<TypeQuizInfo>(QuizInfo);
+  const fieldData: number[] = useRecoilValue(pre_Stage_percentageArray)
+  const { data, numOfNormalChoices, title, perItem, storeId, idx } = useRecoilValue<TypeQuizInfo>(QuizInfo);
   if(!data) return <div>データを読み込めませんでした</div>;
   const SumOfQuestion = 20;
   const numOfChoice = unKnow_Buttn? numOfNormalChoices + 1: numOfNormalChoices
@@ -49,10 +52,11 @@ export const Kuizu = () => {
   };
 
   // ボタン後の確認画面時に、次の問題へ進む+screen状態を変更
-  const handleBodyClick = () => {
+  const handleBodyClick = async () => {
     if (screenState !== "ConfirmedTrue" && screenState !== "ConfirmedFalse") return;
     if (quizState.numOfQuestion >= SumOfQuestion) {
       const CorrectPercentage = Math.floor(sumOfCorrect.current * 100 / numOfQuestion)
+      await useSavePercentage(perItem, storeId, idx, CorrectPercentage,fieldData)
       console.log(CorrectPercentage)
       const resultData: TypeResultData = { data, result: Quiz_log.current, CorrectPercentage}; // .currentを使用
       console.log(resultData)

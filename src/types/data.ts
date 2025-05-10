@@ -1,4 +1,5 @@
 export type Data = {
+    storeId: string,
     dataName: string,
     img: string,
     title: string,
