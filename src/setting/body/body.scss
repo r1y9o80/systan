@@ -91,13 +91,36 @@ $header_height: 50px;
 
 .meter {
     appearance: none;
-    border-radius: 10px;  // 角を丸くする場合
-    background-color: #f0f0f0;  // 背景色を指定
-    color: red;          // 色を指定
     width: 65%;
-    height: 30%;
-    overflow: hidden;
+    height: 20px;
+    background: none;
+    border: none;
+  }
+  
+  .meter::-webkit-meter-bar {
+    background: #eee;
+    border-radius: 10px;
+    height: 100%;
+    box-shadow: inset 0 0 5px #aaa;
+  }
+  
+  .meter::-webkit-meter-optimum-value {
+    background: rgb(48, 201, 86);
+    border-radius: 10px;
+  }
+
+  .meter::-moz-meter-bar {
+    background: rgb(48, 201, 86);
+  }
+  
+
+.meter_h4 span {
+    height: 100%;
 }
+  
+
+
+  
 
 .subtitle_div{
     grid-area: subtitle;

@@ -74,8 +74,7 @@ export const Body: React.FC<{ selectedKey: string }> = memo(({ selectedKey }) =>
                         <div className="title_div"><h4 className="title">{this_title}</h4></div>
                         <div className="meter_div">
                             <h4 className="meter_h4">
-                                <meter className="meter" value={correctPercentage} min="0" max="100"></meter>　
-                                {correctPercentage}%
+                                <meter className="meter" value={correctPercentage} min="0" max="100"></meter><span style={{marginLeft: "15px"}}>{correctPercentage}%</span>
                             </h4>
                         </div>
                         <div className="subtitle_div"><h5 className="subtitle">{subtitle}<span className="label_span"></span></h5></div>
