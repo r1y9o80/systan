@@ -18,6 +18,14 @@ export const useEnglish_read = (text:string) => {
                 }
             }
 
+            const audios_URL: string[] = ["/mp/correct.mp3", "/mp/incorrect.mp3"];
+
+            audios_URL.forEach((audio_URL) => {
+                const audio = new Audio(audio_URL);
+                audio.pause();
+                audio.currentTime = 0;
+            })
+
             window.speechSynthesis.cancel();
     
             // 発言を再生
