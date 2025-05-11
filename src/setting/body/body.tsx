@@ -44,13 +44,14 @@ export const Body: React.FC<{ selectedKey: string }> = memo(({ selectedKey }) =>
         const fetchCorrectPercentages = async () => {
             const data = await getCorrectPercentages_Array();
             setCorrectPercentagesData(data);  // ステートにデータをセット
+            console.log("データを受け取りました",data)
         };
-
         fetchCorrectPercentages();
     }, []);
     
     const { storeId, dataName, img, title, subtitle, startItem, perItem, NumOfChoice } = stageData;
     const CorrectPercentages_onThisStage: number[] = correctPercentagesData[storeId] || []; // データがない場合は空配列を返す
+    console.log(CorrectPercentages_onThisStage)
 
     const transKuizu = async (dataName: string, startItem: number, perItem: number, numOfNormalChoices: number, title: string,idx:number) => {
         const data = await useGetJsonData(dataName, startItem, perItem);
@@ -103,6 +104,7 @@ async function getCorrectPercentages_Array(): Promise<CorrectPercentagesData> {
         console.log("ドキュメントが存在しません");
         return {}; // ドキュメントが存在しない場合、空のオブジェクトを返す
     } else {
+        console.log("ドキュメントを取得しました");
         return The_Doc.data() as CorrectPercentagesData; // データをそのまま返す
     }
 }

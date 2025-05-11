@@ -17,6 +17,8 @@ export const useEnglish_read = (text:string) => {
                     break; // 見つかったらループを終了
                 }
             }
+
+            window.speechSynthesis.cancel();
     
             // 発言を再生
             window.speechSynthesis.speak(uttr);
