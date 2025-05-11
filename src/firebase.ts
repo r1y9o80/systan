@@ -21,26 +21,27 @@ export const db = getFirestore(firebaseApp);
 
 
 
-// //ここからはログイン時にDOCにユーザー追加
+//ここからはログイン時にDOCにユーザー追加
 
-// import { onAuthStateChanged } from "firebase/auth";
-// import { doc, setDoc } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 
-// // onAuthStateChangedでログイン状態を監視
-// onAuthStateChanged(auth, async (user) => {
-//   if (user) {
-//     // ユーザーがログインしている場合
-//     const {uid: userId, displayName: name, photoURL: photoURL} = user;
-//     const docRef = doc(db, "users", userId); // ユーザーIDをドキュメントIDに使用
+// onAuthStateChangedでログイン状態を監視
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    // ユーザーがログインしている場合
+    const {uid: userId, displayName: name, photoURL: photoURL} = user;
+    const docRef = doc(db, "users", userId); // ユーザーIDをドキュメントIDに使用
+    const doc_data = await getDoc(docRef)
+    if(doc_data.exists()) return
     
-//     // ドキュメントの存在確認なしでsetDocを実行（存在しない場合に新規作成される）
-//     await setDoc(docRef, {
-//       userId,
-//       name, // ログインしたユーザーの名前など
-//       photoURL
-//     }, { merge: true }); // merge: trueで既存ドキュメントに追加
-//   } else {
-//     // ユーザーがログインしていない場合の処理（任意）
-//     console.log("ログインしていません");
-//   }
-// });
+    await setDoc(docRef, {
+      userId,
+      name, // ログインしたユーザーの名前など
+      photoURL
+    }, { merge: true }); // merge: trueで既存ドキュメントに追加
+  } else {
+    // ユーザーがログインしていない場合の処理（任意）
+    console.log("ログインしていません");
+  }
+});
