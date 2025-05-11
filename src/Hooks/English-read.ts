@@ -1,3 +1,5 @@
+import { audioStop } from "./correctJudge";
+
 export const useEnglish_read = (text:string) => {
     if ('speechSynthesis' in window) {
         const uttr = new SpeechSynthesisUtterance();
@@ -18,13 +20,7 @@ export const useEnglish_read = (text:string) => {
                 }
             }
 
-            const audios_URL: string[] = ["/mp/correct.mp3", "/mp/incorrect.mp3"];
-
-            audios_URL.forEach((audio_URL) => {
-                const audio = new Audio(audio_URL);
-                audio.pause();
-                audio.currentTime = 0;
-            })
+            audioStop()
 
             window.speechSynthesis.cancel();
     
