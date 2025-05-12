@@ -10,6 +10,7 @@ export const useQuizResultSend = async (title: string, CorrectPercentage: number
     if (!userId || !displayName) return;
 
     const message = [
+    "",
     "───────────────",
     `[Quiz Result] 📅 ${now}`,
     `👤 ${displayName} (${userId})`,
