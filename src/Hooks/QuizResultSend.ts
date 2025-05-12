@@ -7,7 +7,7 @@ export const useQuizResultSend = async (title: string, CorrectPercentage: number
 
     if (!userId || !displayName) return;
 
-    const message = `\n\n\n\n\n${userId}\n${displayName}\n${title}:　 ${CorrectPercentage}%\n\n\n\n\n`;
+    const message = `**[Quiz Result]**\n👤 ${displayName} (${userId})\n📘 ${title}\n✅ 正答率: ${CorrectPercentage}%`;
 
     try {
         // POSTリクエストの送信
