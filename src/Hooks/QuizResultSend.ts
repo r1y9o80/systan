@@ -1,11 +1,11 @@
 import { getAuth } from "firebase/auth";
-import firebase from "firebase/compat/app";
+import { Timestamp } from "firebase/firestore";
 
 export const useQuizResultSend = async (title: string, CorrectPercentage: number) => {
     const auth = getAuth();
     const userId = auth.currentUser?.uid;
     const displayName = auth.currentUser?.displayName;
-    const now = firebase.firestore.Timestamp.now().toDate()
+    const now = Timestamp.now().toDate()
 
     if (!userId || !displayName) return;
 
