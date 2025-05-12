@@ -9,15 +9,15 @@ export const useQuizResultSend = async (title: string, CorrectPercentage: number
 
     if (!userId || !displayName) return;
 
-    const message = `
+    const message = [
+    "───────────────",
+    `[Quiz Result] 📅 ${now}`,
+    `👤 ${displayName} (${userId})`,
+    `📘 [${title}]`,
+    `✅ 正答率: ${CorrectPercentage}%`,
+    "───────────────"
+    ].join("\n");
 
-    ───────────────
-    [Quiz Result] 📅 ${now}
-    👤 ${displayName} (${userId})
-    📘 [${title}]
-    ✅ 正答率: ${CorrectPercentage}%
-    ───────────────
-    `;
 
     try {
         // POSTリクエストの送信
