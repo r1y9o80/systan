@@ -5,16 +5,18 @@ export const useQuizResultSend = async (title: string, CorrectPercentage: number
     const auth = getAuth();
     const userId = auth.currentUser?.uid;
     const displayName = auth.currentUser?.displayName;
-    const now = Timestamp.now().toDate()
+    const now = Timestamp.now().toDate().toLocaleDateString();
 
     if (!userId || !displayName) return;
 
-    const message = `───────────────
+    const message = `
+    ───────────────
     [Quiz Result] 📅 ${now}
     👤 ${displayName} (${userId})
     📘 [${title}]
     ✅ 正答率: ${CorrectPercentage}%
-    ───────────────`;
+    ───────────────
+    `;
 
     try {
         // POSTリクエストの送信
