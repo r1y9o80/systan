@@ -7,7 +7,7 @@ export const useQuizResultSend = async (title: string, CorrectPercentage: number
 
     if (!userId || !displayName) return;
 
-    const message = `${userId}\n${displayName}\n${title}: ${CorrectPercentage}`;
+    const message = `\n${userId}\n${displayName}\n${title}:　 ${CorrectPercentage}%\n`;
 
     try {
         // POSTリクエストの送信
