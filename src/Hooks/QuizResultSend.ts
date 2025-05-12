@@ -12,10 +12,10 @@ export const useQuizResultSend = async (title: string, CorrectPercentage: number
     const message = [
     "",
     "───────────────",
-    ` [Quiz Result] 📅 ${now}`,
-    ` 👤 ${displayName} (${userId})`,
-    ` 📘 [${title}]`,
-    ` ✅ 正答率: ${CorrectPercentage}%`,
+    `　[Quiz Result] 📅 ${now}`,
+    `　👤 ${displayName} (${userId})`,
+    `　📘 [${title}]`,
+    `　✅ 正答率: ${CorrectPercentage}%`,
     "───────────────"
     ].join("\n");
 
