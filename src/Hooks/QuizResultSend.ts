@@ -19,7 +19,7 @@ export const useQuizResultSend = async (title: string, CorrectPercentage: number
             body: JSON.stringify({ message }),
         });
 
-        const data = await response.json(); // レスポンスをJSONとして解析
+        const data = await response.text(); // レスポンスをJSONとして解析
 
         console.log("Success:", data); // 成功時の処理
     } catch (error) {
