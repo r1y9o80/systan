@@ -11,6 +11,7 @@ import { useSavePercentage } from "../Hooks/Save-Percentage";
 import { useEnglish_read } from "../Hooks/English-read";
 import type { TypeQuizInfo, TypeQuizState } from "../types/Quiz"
 import type { TypeResult, TypeResultData } from "../types/Quiz_Result";
+import { useQuizResultSend } from "../Hooks/QuizResultSend";
 
 
 export const Kuizu = () => {
@@ -54,11 +55,12 @@ export const Kuizu = () => {
   };
   
   // ボタン後の確認画面時に、次の問題へ進む+screen状態を変更
-  const handleBodyClick = async () => {
+  const handleBodyClick = () => {
     if (screenState !== "ConfirmedTrue" && screenState !== "ConfirmedFalse") return;
     if (quizState.numOfQuestion >= SumOfQuestion) {
       const CorrectPercentage = Math.floor(sumOfCorrect.current * 100 / numOfQuestion)
-      await useSavePercentage(perItem, storeId, idx, CorrectPercentage,fieldData)
+      useSavePercentage(perItem, storeId, idx, CorrectPercentage,fieldData)
+      useQuizResultSend(title, CorrectPercentage)
       console.log(CorrectPercentage)
       const resultData: TypeResultData = { data, result: Quiz_log.current, CorrectPercentage}; // .currentを使用
       console.log(resultData)
