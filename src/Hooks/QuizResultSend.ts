@@ -5,11 +5,12 @@ export const useQuizResultSend = async (title: string, CorrectPercentage: number
     const auth = getAuth();
     const userId = auth.currentUser?.uid;
     const displayName = auth.currentUser?.displayName;
-    const now = Timestamp.now().toDate().toLocaleDateString();
+    const now = Timestamp.now().toDate().toLocaleString();
 
     if (!userId || !displayName) return;
 
     const message = `
+
     ───────────────
     [Quiz Result] 📅 ${now}
     👤 ${displayName} (${userId})
