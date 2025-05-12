@@ -1,13 +1,20 @@
 import { getAuth } from "firebase/auth";
+import firebase from "firebase/compat/app";
 
 export const useQuizResultSend = async (title: string, CorrectPercentage: number) => {
     const auth = getAuth();
     const userId = auth.currentUser?.uid;
     const displayName = auth.currentUser?.displayName;
+    const now = firebase.firestore.Timestamp.now().toDate()
 
     if (!userId || !displayName) return;
 
-    const message = `**[Quiz Result]**\n👤 ${displayName} (${userId})\n📘 ${title}\n✅ 正答率: ${CorrectPercentage}%`;
+    const message = `───────────────
+    [Quiz Result] 📅 ${now}
+    👤 ${displayName} (${userId})
+    📘 [${title}]
+    ✅ 正答率: ${CorrectPercentage}%
+    ───────────────`;
 
     try {
         // POSTリクエストの送信
