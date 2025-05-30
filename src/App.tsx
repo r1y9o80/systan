@@ -3,7 +3,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { RecoilRoot } from "recoil";
 import { useRecoilValue } from "recoil";
 import { sectionState } from "./states/section.ts";
-import { Setting } from "./setting/setting.tsx";
+import { Setting } from "./Home/Home.tsx";
 import { Kuizu } from "./kuizu/kuizu.tsx";
 import { Result } from "./result/result.tsx";
 import { List } from "./list/list.tsx";

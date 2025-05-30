@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import { memo } from "react";
 import "./header.css";
-import { init } from "../setting_data/data";
+import { init } from "../Home-data/data";
 import { auth } from "../../firebase";
 
 export const Header: React.FC<{ selectedKey: string, setSelectedKey: React.Dispatch<React.SetStateAction<string>> }> = memo(({ selectedKey, setSelectedKey }) => {

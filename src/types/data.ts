@@ -1,11 +1,14 @@
-export type Data = {
+export interface BodyBlockType {
+    dataName: string;
+    title: string;
+    subtitle: string;
+    img: string;
+    start: number;
+    totalNum: number;
+}
+
+
+export type DataType = {
     storeId: string,
-    dataName: string,
-    img: string,
-    title: string,
-    subtitle: string,
-    startItem: number,
-    perItem: number,
-    total: number,
-    NumOfChoice: number
+    body: BodyBlockType[]
 }

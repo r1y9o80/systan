@@ -1,13 +1,14 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useEffect, useState, useRef } from "react";
 
 // 状態管理(Recoil関連)
-import { useSetRecoilState } from "recoil";
+import { useSetRecoilState, useRecoilState } from "recoil";
 import { QuizInfo } from "../../states/kuizu.ts";
 import { sectionState } from "../../states/section.ts";
 import { pre_Stage_percentageArray } from "../../states/pre-Stage-percentagesArray.ts";
+import { y_position } from "../../states/y-position.ts";
 
 //データ()
-import { init } from "../setting_data/data.tsx";
+import { init } from "../Home-data/data.tsx";
 
 // スタイル
 import "./body.scss";
@@ -17,8 +18,8 @@ import kobun_tangoImg from "./imgs/kobun-tango.png";
 import systanImg from "./imgs/systan.png";
 
 // タイプ
-import type { Data } from "../../types/data.ts";
 import type { TypeQuizInfo } from "../../types/Quiz.ts";
+import type { BodyBlockType, DataType  } from "../../types/data.ts";
 
 // カスタムフック
 import { useGetJsonData } from "../../Hooks/GetJsonData.ts";
@@ -38,9 +39,13 @@ export const Body: React.FC<{ selectedKey: string }> = memo(({ selectedKey }) =>
     const setSection = useSetRecoilState(sectionState);
     const setPre_Stage_percentageArray = useSetRecoilState(pre_Stage_percentageArray)
     const [correctPercentagesData, setCorrectPercentagesData] = useState<CorrectPercentagesData>({});
-    const stageData: Data = init[selectedKey];
-    
+    const stageData: DataType = init[selectedKey];
+    const scrollRef = useRef<HTMLDivElement>(null);
+    const [y_pos, setY_pos] = useRecoilState(y_position)
+
     useEffect(() => {
+        scrollRef.current?.scrollTo({ top: y_pos, behavior: 'auto' });
+        console.log(y_pos)
         const fetchCorrectPercentages = async () => {
             const data = await getCorrectPercentages_Array();
             setCorrectPercentagesData(data);  // ステートにデータをセット
@@ -49,11 +54,12 @@ export const Body: React.FC<{ selectedKey: string }> = memo(({ selectedKey }) =>
         fetchCorrectPercentages();
     }, []);
     
-    const { storeId, dataName, img, title, subtitle, startItem, perItem, NumOfChoice } = stageData;
+    const { storeId, body } = stageData;
     const CorrectPercentages_onThisStage: number[] = correctPercentagesData[storeId] || []; // データがない場合は空配列を返す
     console.log(CorrectPercentages_onThisStage)
 
     const transKuizu = async (dataName: string, startItem: number, perItem: number, numOfNormalChoices: number, title: string,idx:number) => {
+        scrollRef.current?.scrollTop && setY_pos(scrollRef.current?.scrollTop)
         const data = await useGetJsonData(dataName, startItem, perItem);
         setSection("kuizu");
         setKuizu({ data, numOfNormalChoices, title, perItem, storeId, idx });
@@ -62,24 +68,23 @@ export const Body: React.FC<{ selectedKey: string }> = memo(({ selectedKey }) =>
     };
 
     return (
-        <div id="SettingBody">
-            {Array.from({ length: stageData.total }).map((_, i) => {
-                const start = startItem + perItem * i;
-                const end = startItem + perItem * (i + 1) - 1;
-                const this_title = `${title} ${start}～${end}`;
-                const correctPercentage = CorrectPercentages_onThisStage[i] || 0; // 配列の長さが足りない場合は 0% を表示
+        <div id="SettingBody" ref={scrollRef}>
+            {body.map((objectElement, i) => {
+                const { dataName, title, subtitle, img, start, totalNum} = objectElement
+                const correctPercentage = CorrectPercentages_onThisStage[i]
+                const NumOfChoice = 4;
 
                 return (
                     <div className="block" key={i}>
                         <div className="img_div"><img className="img" src={imgNames[img]} alt="" /></div>
-                        <div className="title_div"><h4 className="title">{this_title}</h4></div>
+                        <div className="title_div"><h4 className="title">{title}</h4></div>
                         <div className="meter_div">
                             <h4 className="meter_h4">
                                 <meter className="meter" value={correctPercentage} min="0" max="100"></meter><span style={{marginLeft: "15px"}}>{correctPercentage}%</span>
                             </h4>
                         </div>
                         <div className="subtitle_div"><h5 className="subtitle">{subtitle}<span className="label_span"></span></h5></div>
-                        <button className="button1" onClick={() => transKuizu(dataName, start, perItem, NumOfChoice, this_title,i)}>学習</button>
+                        <button className="button1" onClick={() => transKuizu(dataName, start, totalNum, NumOfChoice, title,i)}>学習</button>
                         <button className="button2" onClick={() => setSection("list")}>一覧</button>
                     </div>
                 );

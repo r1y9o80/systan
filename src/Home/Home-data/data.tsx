@@ -1,0 +1,54 @@
+import { DataType } from "../../types/data"
+import { bodyBlock } from "./body-class";
+
+export const headers = ["[英単語]ステージ1", "[英単語]ステージ2", "[英単語]ステージ3", "[英単語]ステージ4", "[英単語]ステージ5", "[古文単語]ステージ1"]
+
+export const init:  { [key: string]: DataType } = {
+    "[英単語]ステージ1" : {
+        storeId: "0",
+        body: [
+            ...bodyBlock.generateSequenceBlocks("systan-data", "[英単語]", "[英単語]ステージ1　(level-1)", "systan-Img", 1, 20, 20),
+            new bodyBlock("systan-data", "[英単語]総復習", "[英単語]ステージ1　(level-1)", "systan-Img", 1, 400)
+        ]
+    },
+    "[英単語]ステージ2" : {
+        storeId: "1",
+        body: [
+            ...bodyBlock.generateSequenceBlocks("systan-data", "[英単語]", "[英単語]ステージ1　(level-1)", "systan-Img", 1, 20, 20),
+            new bodyBlock("systan-data", "[英単語]総復習", "[英単語]ステージ1　(level-1)", "systan.png", 401, 400)
+        ]
+    },
+    "[英単語]ステージ3" : {
+        storeId: "2",
+        body: [
+            ...bodyBlock.generateSequenceBlocks("systan-data", "[英単語]", "[英単語]ステージ1　(level-1)", "systan-Img", 801, 20, 20),
+            new bodyBlock("systan-data", "[英単語]総復習", "[英単語]ステージ1　(level-1)", "systan.png", 801, 400)
+        ]
+    },
+    "[英単語]ステージ4" : {
+        storeId: "3",
+        body: [
+            ...bodyBlock.generateSequenceBlocks("systan-data", "[英単語]", "[英単語]ステージ1　(level-1)", "systan-Img", 1201, 20, 20),
+            new bodyBlock("systan-data", "[英単語]総復習", "[英単語]ステージ1　(level-1)", "systan.png", 1201, 400)
+        ]
+    },
+    "[英単語]ステージ5" : {
+        storeId: "4",
+        body: [
+            ...bodyBlock.generateSequenceBlocks("systan-data", "[英単語]", "[英単語]ステージ1　(level-1)", "systan-Img", 1601, 20, 20),
+            new bodyBlock("systan-data", "[英単語]総復習", "[英単語]ステージ1　(level-1)", "systan.png", 1601, 400)
+        ]
+    },    
+    "[古文単語]ステージ1" : {
+        storeId: "5",
+
+        body: [
+            ...bodyBlock.generateSequenceBlocks("systan-data", "[古文単語]", "[古文単語]ステージ1　(level-1)", "kobun-tango-Img", 1, 13, 20),
+            new bodyBlock("systan-data", "[古文単語]総復習", "[古文単語]ステージ1　(level-1)", "kobun-tango-Img", 1, 260)
+        ]
+    }
+}
+
+
+
+console.log(init)
