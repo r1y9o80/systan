@@ -19,7 +19,7 @@ import systanImg from "./imgs/systan.png";
 
 // タイプ
 import type { TypeQuizInfo } from "../../types/Quiz.ts";
-import type { BodyBlockType, DataType  } from "../../types/data.ts";
+import type { DataType  } from "../../types/data.ts";
 
 // カスタムフック
 import { useGetJsonData } from "../../Hooks/GetJsonData.ts";
