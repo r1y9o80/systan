@@ -72,7 +72,7 @@ export const Body: React.FC<{ selectedKey: string }> = memo(({ selectedKey }) =>
             {body.map((objectElement, i) => {
                 const { dataName, title, subtitle, img, start, totalNum} = objectElement
                 const correctPercentage = CorrectPercentages_onThisStage[i]
-                const NumOfChoice = 4;
+                const NumOfChoice = 3;
 
                 return (
                     <div className="block" key={i}>
