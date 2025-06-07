@@ -15,12 +15,16 @@
     height: 100%;
     margin-right: 13px;
     display: grid;
+    grid-template-rows: 100%;
+	grid-template-columns: 50% 50%;
     grid-template-areas: 
         "Home Setting"
 }
 
 .Home-home_button{
     grid-area: Home;
+    width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -28,6 +32,8 @@
 
 .Home-setting_button{
     grid-area: Setting;
+    width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -36,4 +42,9 @@
 .Home-p{
     font-size: 35px;
     color: blue;
+}
+
+.Home-footer_img {
+    height: 70%; 
+    width: auto;
 }
