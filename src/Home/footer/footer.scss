@@ -1,3 +1,39 @@
+@use '../../styles/variables' as *;
+
+.Home-footer_div{
+    background-color: rgb(238, 238, 238);
+    width: 100svw;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top: 4px solid rgb(224, 224, 224);
+}
+
 .Home-footer{
-    
+    width: calc(($global-display-Width) - 20px);
+    height: 100%;
+    margin-right: 13px;
+    display: grid;
+    grid-template-areas: 
+        "Home Setting"
+}
+
+.Home-home_button{
+    grid-area: Home;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Home-setting_button{
+    grid-area: Setting;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Home-p{
+    font-size: 35px;
+    color: blue;
 }

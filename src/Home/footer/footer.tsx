@@ -3,14 +3,16 @@ import { memo } from "react"
 
 export const Footer =  memo(() => {
     return(
-        <footer className="Home-footer">
-            <div className="Home-home_Button">
-                <p>メニュー</p>
+        <div className="Home-footer_div">
+          <footer className="Home-footer">
+            <div className="Home-home_button">
+                <p className="Home-p">⌂</p>
             </div>
-            <div className="Home-setting_Button">
-                <p>設定</p>
+            <div className="Home-setting_button">
+                <p className="Home-p">⚙</p>
             </div>
-        </footer>
+          </footer>
+        </div>
     )
 
 })

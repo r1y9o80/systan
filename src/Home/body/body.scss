@@ -1,7 +1,8 @@
 @use '../../styles/variables' as *;
 
 $radius-size: 6px;
-$header_height: 50px;
+$header_height: 60px;
+$footer_height: 60px;
 
 * {
     margin: 0;
@@ -21,7 +22,7 @@ $header_height: 50px;
     justify-content: start;
     align-items: center;
     width: 100svw;
-    height: calc(100svh - #{$header_height}); /* 親要素の高さを確保 */
+    height: calc(100svh - #{$header_height} - #{$footer_height}); /* 親要素の高さを確保 */
     white-space: normal; /* 必要に応じて調整 */
     overflow-y: scroll;
 }
