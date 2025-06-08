@@ -4,15 +4,15 @@ import {useRecoilState} from "recoil"
 import { setting_header } from "../states/setting_header"
 import { Header } from "./header/header"
 import { Body } from "./body/body"
-import { Footer } from "./footer/footer"
+import { Menu } from "../Menu/menu.tsx"
 
-export const Setting =  memo(() => {
+export const Home =  memo(() => {
   const [selectedKey, setSelectedKey] = useRecoilState(setting_header)
     return (
         <div id="setting">
           <Header selectedKey={selectedKey} setSelectedKey={setSelectedKey} />
           <Body selectedKey={selectedKey}/>
-          <Footer/>
+          <Menu/>
         </div>
     )
 })

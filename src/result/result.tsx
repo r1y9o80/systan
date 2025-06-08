@@ -52,7 +52,7 @@ export const Result = () => {
             </div>
             <div className="footer">
                 <div className='result-buttondiv'><button type="button" className="result-button" onClick={() => setSection("kuizu")}>続ける</button></div>
-                <div className='result-buttondiv'><button type="button" className="result-button" onClick={() => setSection("setting")}>終了</button></div>
+                <div className='result-buttondiv'><button type="button" className="result-button" onClick={() => setSection("home")}>終了</button></div>
             </div>
         </div>
     );

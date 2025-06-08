@@ -6,7 +6,7 @@ export const List = () => {
     return(
         <>
           <h1>まだ実装されていません</h1>
-          <button onClick={() => setSection("setting")}>戻る</button>
+          <button onClick={() => setSection("home")}>戻る</button>
         </>
     )
 }

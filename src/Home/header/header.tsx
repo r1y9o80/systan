@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import { memo } from "react";
-import "./header.css";
+import "./header.scss";
 import { init } from "../Home-data/data";
 import { auth } from "../../firebase";
 

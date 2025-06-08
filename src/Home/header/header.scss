@@ -1,3 +1,5 @@
+@use '../../styles/variables' as *;
+
 *{
     margin: 0;
     padding: 0;
@@ -7,7 +9,7 @@ header {
     background-color: rgb(238, 238, 238);
     margin: 0;
     width: 100%; /* ヘッダー全体の幅を親要素に合わせる */
-    height: 60px;
+    height: $header_height;
     overflow-x: auto; /* 横スクロールを許可 */
     border-bottom: 2px solid rgb(224, 224, 224);
 }
