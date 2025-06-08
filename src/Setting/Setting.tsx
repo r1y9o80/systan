@@ -1,6 +1,6 @@
 import "./Setting.scss"
 import { memo } from "react";
-import { Setting_Body } from "./Setting_Body/setting_Body.tsx";
+import { Setting_Body } from "./Setting_Body/setting_body.tsx";
 import { Menu } from "../Menu/menu.tsx";
 
 
