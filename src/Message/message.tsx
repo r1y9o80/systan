@@ -1,18 +1,22 @@
 import "./message.scss"
 import { useState } from "react"
 import { useSetRecoilState } from "recoil"
-import { message_shown } from "../states/message-shown"
+// import { message_shown } from "../states/message-shown"
 import { doc, getFirestore, updateDoc } from "firebase/firestore"
 import { getAuth } from "firebase/auth"
+import { userData_recoil } from "../states/userData"
 
 export const Message = () => {
     const [closeShow, setCloseShow] = useState(false)
-    const setMessageShown = useSetRecoilState(message_shown)
+    const setUserData = useSetRecoilState(userData_recoil)
     new Promise(resolve => setTimeout(resolve,4000)).then(() => {
-        setCloseShow(prev => !prev)
+        setCloseShow(true)
     })
     function closed(){
-      setMessageShown(true);
+      setUserData(prev => ({
+        ...prev,
+        messageShown: true,
+      }));
       save_messageShown(true);
     }
 

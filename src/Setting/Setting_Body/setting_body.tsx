@@ -40,7 +40,7 @@ export const Setting_Body = ({ logOut }: Props) => {
     <div className="setting-container">
       <button className="logout_button" onClick={logOut}>ログアウト</button>
 
-      <label htmlFor="selectSum" className="setting-selectSum_label">問題数</label>
+      <label htmlFor="selectSum" className="setting-selectSum_label">問題数(この中にはないを含まない)</label>
       <select id="selectSum" value={settingData.selectSum} onChange={handleSelectChange}>
         <option value={2}>2</option>
         <option value={3}>3</option>
@@ -49,7 +49,7 @@ export const Setting_Body = ({ logOut }: Props) => {
       </select>
 
       <div className="toggle-div">
-        <p className="toggle-p">間違えた問題だけ表示</p>
+        <p className="toggle-p">この中にはないON/OFF</p>
         <label className="toggle-button-1">
           <input
             type="checkbox"
