@@ -7,7 +7,7 @@ export const useTextSned = async (message: string) => {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                header: "QuizResult",
+                header: "Message",
                 body: message
             })
         });
