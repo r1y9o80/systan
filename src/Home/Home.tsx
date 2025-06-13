@@ -16,7 +16,7 @@ export const Home = memo(() => {
 
   useEffect(() => {
     if(userData["messageShown"] === false) setMessageShown(false)
-  }, [userData["messageShown"]]);
+  }, [userData]);
 
   return (
     <div id="setting">
