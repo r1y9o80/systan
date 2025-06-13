@@ -33,6 +33,7 @@ export const Setting_Body = ({ logOut }: Props) => {
   const sendText = () => {
     if(!ObserveTextArea.current) return
     const message = ObserveTextArea.current.value
+    if(!message) return
     useTextSned(message); // もしくは sendTextSned(message) など、適切に呼ぶ
     ObserveTextArea.current.value = ""
     ObserveTextArea.current.placeholder = "送信出来ました！"
