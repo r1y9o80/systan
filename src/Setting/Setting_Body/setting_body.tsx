@@ -64,7 +64,6 @@ export const Setting_Body = ({ logOut }: Props) => {
       <div className="messageForm">
         <p className="textFormTitle">質問・要望・メッセージ等コメントください！</p>
         <textarea
-          onFocus={() => window.scrollTo(0, 0)}
           ref={ObserveTextArea}
           className="textbox"
           placeholder="ここに入力してください"
