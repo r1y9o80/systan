@@ -31,9 +31,10 @@ export const Setting_Body = ({ logOut }: Props) => {
 
   // 送信処理関数（イベントハンドラ）
   const sendText = () => {
-    const message = ObserveTextArea.current?.value;
-    if (!message) return;
+    if(!ObserveTextArea.current) return
+    const message = ObserveTextArea.current.value
     useTextSned(message); // もしくは sendTextSned(message) など、適切に呼ぶ
+    ObserveTextArea.current.value = ""
   };
 
   return (
@@ -63,7 +64,6 @@ export const Setting_Body = ({ logOut }: Props) => {
         <p className="textFormTitle">質問・要望・メッセージ等コメントください！</p>
         <textarea
           ref={ObserveTextArea}
-          value={ObserveTextArea.current?.value}
           className="textbox"
           placeholder="ここに入力してください"
         ></textarea>
