@@ -15,9 +15,9 @@ export const Home = memo(() => {
   const userData = useRecoilValue<Record<string, any>>(userData_recoil);
 
   useEffect(() => {
+    console.log(userData["messageShown"])
     if(userData["messageShown"] === false) setMessageShown(false)
-  }, [userData]);
-
+  }, [userData["messageShown"]]);
   return (
     <div id="setting">
       {!messageShown && <Message />}

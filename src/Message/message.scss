@@ -49,6 +49,8 @@
 }
 
 .message-textBox p {
+    height: 100%;
+    overflow-y: auto;
     margin: 10px;
     font-size: 17px;
 }
