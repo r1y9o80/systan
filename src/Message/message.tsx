@@ -12,7 +12,7 @@ export const Message = () => {
         setCloseShow(prev => !prev)
     })
     function closed(){
-      setMessageShown(true);
+      setMessageShown(prev => prev = true);
       save_messageShown(true);
     }
 
