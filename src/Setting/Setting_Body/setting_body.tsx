@@ -63,6 +63,7 @@ export const Setting_Body = ({ logOut }: Props) => {
         <p className="textFormTitle">質問・要望・メッセージ等コメントください！</p>
         <textarea
           ref={ObserveTextArea}
+          value={ObserveTextArea.current?.value}
           className="textbox"
           placeholder="ここに入力してください"
         ></textarea>

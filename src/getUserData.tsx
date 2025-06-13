@@ -22,7 +22,7 @@ async function getUserData(setUserData: any){
     const doc_data = await getDoc(doc_address);
     if(!doc_data.exists()) return
     const userData = doc_data.data() 
-    if(userData["messageShown"] === undefined) {
+    if(userData["messageShown"] === undefined) {    
         await save_messageShown(false);
         userData["messageShown"] = false
         console.log("undefined")

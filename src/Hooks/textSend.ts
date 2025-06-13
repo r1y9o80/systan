@@ -1,4 +1,21 @@
+import { getAuth } from "firebase/auth";
+
 export const useTextSned = async (message: string) => {
+    const auth = getAuth();
+    const userId = auth.currentUser?.uid;
+    const displayName = auth.currentUser?.displayName;
+    const mailAddress = auth.currentUser?.email
+
+    if (!userId || !displayName) return;
+    const message2 = [
+    "",
+    "───────────────",
+    `　👤 ${displayName} (${userId})`,
+    `📩 ${mailAddress}`,
+    `${message}`,
+    "───────────────"
+    ].join("\n");
+
     try {
         // POSTリクエストの送信
         const response = await fetch("https://quiz-result-sender-v5i2.onrender.com/webhook", {
@@ -8,7 +25,7 @@ export const useTextSned = async (message: string) => {
             },
             body: JSON.stringify({
                 header: "Message",
-                body: message
+                body: message2
             })
         });
 

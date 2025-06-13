@@ -20,7 +20,7 @@ export const Home = memo(() => {
   }, [userData["messageShown"]]);
   return (
     <div id="setting">
-      {!messageShown && <Message />}
+      {messageShown === false && <Message />}
       <Header selectedKey={selectedKey} setSelectedKey={setSelectedKey} />
       <Body selectedKey={selectedKey} />
       <Menu />
