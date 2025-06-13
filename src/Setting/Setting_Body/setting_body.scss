@@ -1,5 +1,132 @@
 @use '../../styles/variables' as *;
 
-.Setting_body-div {
-    height: calc(100svh - $footer_height);
+* {
+    margin: 0;
+    padding: 0;
 }
+
+.setting-container {
+    width: $global-display-Width;
+    height: calc(100svh - $footer_height);
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+}
+
+.setting-logoutButton_container{
+    width: 100%;
+    height: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.logout_button {
+    background-color: rgb(75, 75, 248);
+    height: 50px;
+    width: 200px;
+    border-radius: 5px;
+    font-size: 17px;
+    color: white;
+    margin-top: 20px;
+}
+
+.setting-selectSum_label {
+    margin-top: 30px;
+}
+
+.setting-container select{
+    height: 30px;
+    width: 150px;
+}
+
+.toggle-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.toggle-p{
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.toggle-button-1 {
+    display: inline-block;
+    position: relative;
+    width: 100px;
+    height: 50px;
+    border-radius: 50px;
+    background-color: #dddddd;
+    cursor: pointer;
+    transition: background-color .4s;
+}
+
+.toggle-button-1:has(:checked) {
+    background-color: #4bd865;
+}
+
+.toggle-button-1::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    box-shadow: 0 0 5px rgb(0 0 0 / 20%);
+    background-color: #fff;
+    content: '';
+    transition: left .4s;
+}
+
+.toggle-button-1:has(:checked)::after {
+    left: 50px;
+}
+
+.toggle-button-1 input {
+    display: none;
+}
+
+.messageForm {
+    // background-color: aqua;
+    width: 100%;
+    height: 210px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+}
+
+.messageForm p {
+    width: 90%;
+    margin-bottom: 5px;
+}
+
+.textbox {
+    // background-color: #4bd865;
+    width: 90%;
+    height: 80%;
+    text-align: left;
+    vertical-align: top;
+    padding: 10px;
+}
+
+.textSend_buttonContainer{
+    // background-color: brown;
+    width: 90%;
+    height: 25%;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+.textSend_button {
+    background-color: rgb(75, 75, 248);
+    height: 80%;
+    width: 30%;
+    color: white;
+}
+

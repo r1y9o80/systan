@@ -1,0 +1,54 @@
+@use "../styles/variables" as *;
+
+.message-container {
+    width: 100svw;
+    height: 100svh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    position: absolute;
+}
+
+.message-textBox{
+    background-color: white;
+    width: calc($global-display-Width* 0.85);
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    border-radius: 6px;
+}
+
+.message-textBox .message-titleBox{
+    width: 100%;
+    height: 10%;
+    display: grid;
+    grid-template-rows: 100%;
+	grid-template-columns: 80% 20%;
+    grid-template-areas: 
+        "title close";
+    border-bottom: 4px solid rgb(239, 238, 238);
+
+}
+
+#message-title{
+    grid-area: title;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    font-size: 1.7rem;
+}
+
+#message-closeButton {
+    grid-area: close;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.message-textBox p {
+    margin: 10px;
+    font-size: 17px;
+}

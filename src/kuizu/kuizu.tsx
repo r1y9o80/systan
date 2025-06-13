@@ -12,14 +12,30 @@ import { useEnglish_read } from "../Hooks/English-read";
 import type { TypeQuizInfo, TypeQuizState } from "../types/Quiz"
 import type { TypeResult, TypeResultData } from "../types/Quiz_Result";
 import { useQuizResultSend } from "../Hooks/QuizResultSend";
+import { userData_recoil } from "../states/userData";
+import { settings_recoil } from "../states/settings";
+
+type GenerateDataType = {
+  activeQuestion: string[];
+  inactiveQuestion: string[];
+  select: string[];
+};
 
 
 export const Kuizu = () => {
-  const unKnow_Buttn = true;
+  const settingData = useRecoilValue(settings_recoil)
+  const unKnow_Buttn = settingData["noneInSelect_Active"];
+  const numOfNormalChoices = settingData["selectSum"]
+  const generateData = useRef<GenerateDataType>({
+  activeQuestion: [],
+  inactiveQuestion: [],
+  select: []
+});
   const setSection = useSetRecoilState(sectionState)
+  const setUserData = useSetRecoilState<Record<string,any>>(userData_recoil)
   const setQuizResult = useSetRecoilState(QuizResultState)
   const fieldData: number[] = useRecoilValue(pre_Stage_percentageArray)
-  const { data, numOfNormalChoices, title, perItem, storeId, idx } = useRecoilValue<TypeQuizInfo>(QuizInfo);
+  const { data, title, perItem, storeId, idx } = useRecoilValue<TypeQuizInfo>(QuizInfo);
   if(!data) return <div>データを読み込めませんでした</div>;
   const SumOfQuestion = 20;
   const numOfChoice = unKnow_Buttn? numOfNormalChoices + 1: numOfNormalChoices
@@ -30,7 +46,14 @@ export const Kuizu = () => {
   const Keys: string[] | undefined = Object.entries(data).map((ele) => ele[0])
   
   // クイズデータの生成(quizState(State)の変更)
-  useEffect(() => {Keys && useQuizGenerator(Keys, numOfChoice, setQuizState)}, []);
+  useEffect(() => {
+    generateData.current = {
+      activeQuestion: [...Keys],
+      inactiveQuestion: [],
+      select: [...Keys]
+    }
+    Keys && useQuizGenerator(generateData, numOfChoice, setQuizState)
+  }, []);
   if (!quizState.filtered_Keys.length) return <div>読み込み中...</div>;
   
   const { filtered_Keys,correctKey, numOfQuestion } = quizState;
@@ -59,7 +82,7 @@ export const Kuizu = () => {
     if (screenState !== "ConfirmedTrue" && screenState !== "ConfirmedFalse") return;
     if (quizState.numOfQuestion >= SumOfQuestion) {
       const CorrectPercentage = Math.floor(sumOfCorrect.current * 100 / numOfQuestion)
-      useSavePercentage(perItem, storeId, idx, CorrectPercentage,fieldData)
+      useSavePercentage(perItem, storeId, idx, CorrectPercentage,fieldData,setUserData)
       useQuizResultSend(title, CorrectPercentage)
       console.log(CorrectPercentage)
       const resultData: TypeResultData = { data, result: Quiz_log.current, CorrectPercentage}; // .currentを使用
@@ -67,12 +90,12 @@ export const Kuizu = () => {
       setQuizResult(resultData);
       setSection("result");
     } else {
-      useQuizGenerator(Keys, numOfChoice, setQuizState);
+      useQuizGenerator(generateData, numOfChoice, setQuizState);
       setScreenState("solved");
     }
   };
 
-  if(screenState==="solved")useEnglish_read(data[correctKey][0])
+  if(screenState==="solved") useEnglish_read(data[correctKey][0])
 
   return (
     <div id="kuizu">
@@ -80,7 +103,7 @@ export const Kuizu = () => {
       <header id="header">
         <h4 id="header_title">{title}</h4>
         <h4 id="header_numbers">{`${numOfQuestion}`}/{SumOfQuestion}</h4>
-        <button id="header_button" onClick={() => setSection("setting")}>終</button>
+        <button id="header_button" onClick={() => setSection("home")}>終</button>
       </header>
 
       <div id = "QuizBody" onClick={handleBodyClick}>

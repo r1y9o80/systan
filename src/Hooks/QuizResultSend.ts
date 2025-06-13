@@ -27,7 +27,10 @@ export const useQuizResultSend = async (title: string, CorrectPercentage: number
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ message }),
+            body: JSON.stringify({
+                header: "QuizResult",
+                body: message 
+            })
         });
 
         const data = await response.text(); // レスポンスをJSONとして解析

@@ -1,9 +1,13 @@
 import { getAuth } from "firebase/auth"
 import { getFirestore, doc, updateDoc } from "firebase/firestore"
 
-export const useSavePercentage = (perItem: number, storeId: string, idx: number, CorrectPercentage: number, fieldData: number[]) => {
+export const useSavePercentage = (perItem: number, storeId: string, idx: number, CorrectPercentage: number, fieldData: number[], setUserData: (updater: (prev: any) => any) => void) => {
     const newArray: number[] = generate_newArray(fieldData, perItem, idx, CorrectPercentage)
     SaveStore(storeId, newArray)
+    setUserData(prev => ({
+        ...prev,
+        [storeId]: newArray,
+    }))
 }
 
 function generate_newArray(fieldData: number[], perItem: number, idx:number, CorrectPercentage: number){

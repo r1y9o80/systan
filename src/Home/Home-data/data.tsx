@@ -1,7 +1,7 @@
 import { DataType } from "../../types/data"
 import { bodyBlock } from "./body-class";
 
-export const headers = ["[英単語]ステージ1", "[英単語]ステージ2", "[英単語]ステージ3", "[英単語]ステージ4", "[英単語]ステージ5", "[古文単語]ステージ1"]
+export const headers = ["[英単語]ステージ1", "[英単語]ステージ2", "[英単語]ステージ3", "[英単語]ステージ4", "[英単語]ステージ5", "[古文単語]ステージ1",]
 
 export const init:  { [key: string]: DataType } = {
     "[英単語]ステージ1" : {
