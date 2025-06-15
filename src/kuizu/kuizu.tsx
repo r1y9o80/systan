@@ -52,7 +52,7 @@ export const Kuizu = () => {
       inactiveQuestion: [],
       select: [...Keys]
     }
-    Keys && useQuizGenerator(generateData, numOfChoice, setQuizState)
+    Keys && useQuizGenerator(data, generateData, numOfChoice, setQuizState)
   }, []);
   if (!quizState.filtered_Keys.length) return <div>読み込み中...</div>;
   
@@ -90,7 +90,7 @@ export const Kuizu = () => {
       setQuizResult(resultData);
       setSection("result");
     } else {
-      useQuizGenerator(generateData, numOfChoice, setQuizState);
+      useQuizGenerator(data, generateData, numOfChoice, setQuizState);
       setScreenState("solved");
     }
   };

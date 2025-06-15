@@ -9,13 +9,15 @@ type GenerateDataType = {
 
 
 export const useQuizGenerator = (
+  QuizData: Record<string, any>,
   generateData: React.RefObject<GenerateDataType>,
   numOfChoice: number,
   setQuizState: React.Dispatch<React.SetStateAction<TypeQuizState>>
 ) => {
   const { activeQuestion, inactiveQuestion } = generateData.current;
 
-  const filtered_Keys = shuffle(activeQuestion).slice(0, numOfChoice);
+  const filtered_Keys = generateSelect(QuizData, activeQuestion, numOfChoice)
+  console.log(filtered_Keys)
   const correctKeyIdx = Math.floor(Math.random() * numOfChoice);
   const correctKey = filtered_Keys[correctKeyIdx];
 
@@ -45,3 +47,23 @@ export const useQuizGenerator = (
     numOfQuestion: prev.numOfQuestion + 1,
   }));
 };
+
+function generateSelect(QuizData: Record<string, any>, Keys: string[], numOfChoice: number): string[] {
+  const newKeys: string[] = [];
+  const selects: string[] = [];
+  const mixKeys = shuffle(Keys);
+  let i = 0;
+
+  while (i < mixKeys.length && newKeys.length < numOfChoice) {
+    const key = mixKeys[i++];
+    const entry = QuizData[key];
+
+    const select = entry[1];
+    if (selects.includes(select)) continue;
+
+    newKeys.push(key);
+    selects.push(select);
+  }
+
+  return newKeys;
+}
