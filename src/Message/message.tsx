@@ -28,6 +28,7 @@ export const Message = () => {
           {closeShow && <h1 id="message-closeButton" onClick={() => closed()}>✕</h1>}
         </div>
         <p>
+          ・間違えた問題の出現率が上がる機能が実装されました<br /><br />
           ・問題選択画面の初期位置がズレていた問題を解決しました<br /><br />
           ・アップデート情報が表示されるようになりました。<br /><br />
           ・同じ問題が５問以内に出現しなくなりました。<br /><br />

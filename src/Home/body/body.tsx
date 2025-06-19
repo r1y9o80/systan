@@ -37,7 +37,7 @@ export const Body: React.FC<{ selectedKey: string }> = memo(({ selectedKey }) =>
     useEffect(() => {
         scrollRef.current?.scrollTo({ top: y_pos, behavior: 'auto' });
         console.log(y_pos)
-    }, []);
+    }, [y_pos]);
     const { storeId, body } = stageData;
     const userData = useRecoilValue<Record<string,any>>(userData_recoil)
     const CorrectPercentages_onThisStage: number[] = userData[storeId] || []; // データがない場合は空配列を返す
@@ -47,13 +47,14 @@ export const Body: React.FC<{ selectedKey: string }> = memo(({ selectedKey }) =>
         scrollRef.current?.scrollTop && setY_pos(scrollRef.current?.scrollTop)
         const data = await useGetJsonData(dataName, startItem, perItem);
         setSection("kuizu");
-        setKuizu({ data, title, perItem, storeId, idx });
+        setKuizu({ data, title, perItem, storeId, idx, dataName});
         setPre_Stage_percentageArray(CorrectPercentages_onThisStage)
 
     };
 
     return (
-        <div id="SettingBody" ref={scrollRef}>
+        //常にスクロール追うから重いかも
+        <div id="SettingBody" ref={scrollRef} onScroll={() => scrollRef.current?.scrollTop && setY_pos(scrollRef.current?.scrollTop)}>
             {body.map((objectElement, i) => {
                 const { dataName, title, subtitle, img, start, totalNum} = objectElement
                 const correctPercentage = CorrectPercentages_onThisStage[i]? CorrectPercentages_onThisStage[i]: 0
