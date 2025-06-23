@@ -44,6 +44,7 @@ export const Body: React.FC<{ selectedKey: string }> = memo(({ selectedKey }) =>
     console.log(CorrectPercentages_onThisStage)
 
     const transKuizu = async (dataName: string, startItem: number, perItem: number, title: string,idx:number) => {
+        console.log("dataName",dataName)
         scrollRef.current?.scrollTop && setY_pos(scrollRef.current?.scrollTop)
         const data = await useGetJsonData(dataName, startItem, perItem);
         setSection("kuizu");

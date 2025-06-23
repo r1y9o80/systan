@@ -43,8 +43,8 @@ export const init:  { [key: string]: DataType } = {
         storeId: "5",
 
         body: [
-            ...bodyBlock.generateSequenceBlocks("systan-data", "[古文単語]", "[古文単語]ステージ1　(level-1)", "kobun-tango-Img", 1, 13, 20),
-            new bodyBlock("systan-data", "[古文単語]総復習", "[古文単語]ステージ1　(level-1)", "kobun-tango-Img", 1, 260)
+            ...bodyBlock.generateSequenceBlocks("kobun-data", "[古文単語]", "[古文単語]ステージ1　(level-1)", "kobun-tango-Img", 1, 13, 20),
+            new bodyBlock("kobun-data", "[古文単語]総復習", "[古文単語]ステージ1　(level-1)", "kobun-tango-Img", 1, 260)
         ]
     }
 }
