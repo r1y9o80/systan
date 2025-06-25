@@ -13,7 +13,7 @@ import { Maint } from "./maintenance/maintenance.tsx";
 import { GetUserData } from "./getUserData.tsx";
 
 function AppContent({ logOut }: { logOut: () => Promise<void> }) {
-  const in_maintenance = false; // メンテナンスモードON/OFF切り替え
+  const in_maintenance = true; // メンテナンスモードON/OFF切り替え
   const [user] = useAuthState(auth);
   const section: string = useRecoilValue(sectionState);
 
