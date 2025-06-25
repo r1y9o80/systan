@@ -67,6 +67,11 @@ $bodyPercentage: 80;  // 単位なし
     aspect-ratio: 1 / 1;
 }
 
+.result_grafExplain p{
+  writing-mode: horizontal-tb;
+  text-orientation: mixed;
+}
+
 .resultUl {
     display: flex;
     flex-direction: column;
