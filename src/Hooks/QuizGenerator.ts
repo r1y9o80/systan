@@ -12,12 +12,12 @@ export const useQuizGenerator = (
   generateData: React.RefObject<GenerateDataType>,
   numOfChoice: number,
   setQuizState: React.Dispatch<React.SetStateAction<TypeQuizState>>,
-  occurrenceRate: Record<string, number>
+  result_log: Record<string, {"occurrenceRate": number, "corrected": number}>
 ) => {
 
   const { activeQuestion, inactiveQuestion } = generateData.current;
   
-  const correctKey: string = setCorrectKey(activeQuestion, inactiveQuestion, occurrenceRate)
+  const correctKey: string = setCorrectKey(activeQuestion, inactiveQuestion, result_log)
 
   // 正解を含む選択肢を取得
   const filtered_Keys = generateSelect(QuizData, activeQuestion, numOfChoice, correctKey);
@@ -69,9 +69,9 @@ function generateSelect(
 function setCorrectKey(
   activeQuestion: string[],
   inactiveQuestion: string[],
-  occurrenceRate: Record<string, number>
+  result_log: Record<string, {"occurrenceRate": number, "corrected": number}>
 ){
-  const Mixoccurrence = Object.fromEntries(Object.entries(occurrenceRate).filter(([key,_]) => activeQuestion.includes(key)));
+  const Mixoccurrence = Object.fromEntries(Object.entries(result_log).filter(([key,_]) => activeQuestion.includes(key)));
   const CorrectKey = generateCorrectKey(Mixoccurrence)
   const CorrectIdx = activeQuestion.indexOf(CorrectKey)
   if(CorrectIdx === -1) return ""
@@ -87,15 +87,15 @@ function setCorrectKey(
 
 
 function generateCorrectKey(
-  occurrenceRate: Record<string, number>
+  result_log: Record<string, {"occurrenceRate": number, "corrected": number}>
 ): string {
-  const entries = Object.entries(occurrenceRate);
-  const total = entries.reduce((acc, [_, v]) => acc + v, 0);
+  const entries = Object.entries(result_log);
+  const total = entries.reduce((acc, [_, v]) => acc + v["occurrenceRate"], 0);
   const r = Math.random() * total;
 
   let acc = 0;
   for (const [key, value] of entries) {
-    acc += value;
+    acc += value["occurrenceRate"];
     if (r < acc) return key;
   }
   return entries[entries.length - 1][0]; // fallback

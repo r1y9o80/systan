@@ -58,7 +58,14 @@ export const Body: React.FC<{ selectedKey: string }> = memo(({ selectedKey }) =>
         <div id="SettingBody" ref={scrollRef} onScroll={() => scrollRef.current?.scrollTop && setY_pos(scrollRef.current?.scrollTop)}>
             {body.map((objectElement, i) => {
                 const { dataName, title, subtitle, img, start, totalNum} = objectElement
-                const correctPercentage = CorrectPercentages_onThisStage[i]? CorrectPercentages_onThisStage[i]: 0
+                const percents = {correctKeys: 0, inCorrectKeys:0, not_appearedKeys:0}
+                for(let idx = start; idx < start + totalNum; idx++){
+                    if(userData[dataName]?.[idx]?.corrected === 1) percents["correctKeys"] += 1
+                    if(userData[dataName]?.[idx]?.corrected === 0 || userData[dataName]?.[idx]?.corrected === undefined) percents["not_appearedKeys"] += 1
+                }
+                console.log("Deback",percents.not_appearedKeys,totalNum)
+                //以下は以前の進捗が消えないように、最新パーセント記録法が実行されていない場合以前のものを適応。
+                const correctPercentage = percents.not_appearedKeys !== totalNum? (Math.floor(percents.correctKeys * 100 / totalNum)): (CorrectPercentages_onThisStage[i]? CorrectPercentages_onThisStage[i]: 0);
 
                 return (
                     <div className="block" key={i}>

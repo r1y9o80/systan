@@ -8,7 +8,7 @@ export const useSavePercentage = (perItem: number,
     fieldData: number[], 
     setUserData: (updater: (prev: any) => any) => void,
     dataName: string,
-    occurrenceRate: Record<string, number>,
+    result_log: Record<string, {"occurrenceRate": number, "corrected": number}>,
 ) => {
     
     const newArray: number[] = generate_newArray(fieldData, perItem, idx, CorrectPercentage)
@@ -16,7 +16,7 @@ export const useSavePercentage = (perItem: number,
         const newData = {
             ...prev,
             [storeId]: newArray,
-            [dataName]: prev[dataName] ? { ...prev[dataName], ...occurrenceRate } : occurrenceRate
+            [dataName]: prev[dataName] ? { ...prev[dataName], ...result_log } : result_log
         };
         SaveStore(newData);  // 副作用はここで呼び出す
         return newData;

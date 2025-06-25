@@ -8,19 +8,21 @@ export const useCorrectJudge = (
     correctIdx: string, 
     inputIdx: string, 
     setScreenState: React.Dispatch<React.SetStateAction<string>>, sumOfCorrect: RefObject<number>,
-    occurrenceRate: Record<string,any>
+    result_log : Record<string, {"occurrenceRate": number, "corrected": number}>
 ) => {
     if ('speechSynthesis' in window) window.speechSynthesis.cancel();
     if(correctIdx === inputIdx){
         setScreenState("ConfirmedTrue")
         sumOfCorrect.current +=1
         audio1.play()
-        occurrenceRate[inputIdx]/=1.8
-        console.log(occurrenceRate[inputIdx])
+        result_log[inputIdx]["occurrenceRate"]/=1.8
+        result_log[inputIdx]["corrected"] = 1
+        console.log(result_log[inputIdx])
     }
     else{
         setScreenState("ConfirmedFalse")
         audio2.play()
+        result_log[inputIdx]["corrected"] = 2
     }
 }
 

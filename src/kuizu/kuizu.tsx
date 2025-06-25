@@ -56,24 +56,25 @@ export const Kuizu = () => {
 
   // Keysの作成
   const Keys = Object.keys(data);
+  const filtered: Record<string, { occurrenceRate: number; corrected: number }> = {}
+  for(const key of Keys){
+    filtered[key] = UserData[dataName]?.[key]
+  }
 
-  // occurrenceRateの初期化
-  const filtered = Object.fromEntries(
-    Object.entries(UserData[dataName] ?? {}).filter(([key]) => Keys.includes(key))
-  ) as Record<string, number>;
-  const occurrenceRate = useRef<Record<string, number>>(filtered);
+  const result_log = useRef<Record<string, { occurrenceRate: number; corrected: number }>>(filtered);
+
 
   // 初回のみ実行：クイズの準備
   useEffect(() => {
-    useSetOccurrencerate(Keys, occurrenceRate.current);
-    console.log("occurrence",occurrenceRate.current)
+    useSetOccurrencerate(Keys, result_log.current)
+    console.log("occurrence",result_log.current)
     generateData.current = {
       activeQuestion: [...Keys],
       inactiveQuestion: [],
       select: [...Keys],
     };
     if (Keys.length) {
-      useQuizGenerator(data, generateData, numOfChoice, setQuizState, occurrenceRate.current);
+      useQuizGenerator(data, generateData, numOfChoice, setQuizState, result_log.current);
     }
   }, []);
 
@@ -103,7 +104,7 @@ export const Kuizu = () => {
   const handleButtonClick = (inputKey: string) => {
     if (screenState !== "solved") return;
 
-    useCorrectJudge(correctKey, inputKey, setScreenState, sumOfCorrect, occurrenceRate.current);
+    useCorrectJudge(correctKey, inputKey, setScreenState, sumOfCorrect, result_log.current);
 
     Quiz_log.current.push({ choices: filtered_Keys, correctKey, inputKey });
   };
@@ -123,7 +124,7 @@ export const Kuizu = () => {
         fieldData,
         setUserData,
         dataName,
-        occurrenceRate.current,
+        result_log.current,
       );
 
       useQuizResultSend(title, CorrectPercentage);
@@ -136,7 +137,7 @@ export const Kuizu = () => {
 
       setSection("result");
     } else {
-      useQuizGenerator(data, generateData, numOfChoice, setQuizState, occurrenceRate.current);
+      useQuizGenerator(data, generateData, numOfChoice, setQuizState, result_log.current);
       setScreenState("solved");
     }
   };
