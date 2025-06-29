@@ -1,7 +1,7 @@
 import { DataType } from "../../types/data"
 import { bodyBlock } from "./body-class";
 
-export const headers = ["[英単語]ステージ1", "[英単語]ステージ2", "[英単語]ステージ3", "[英単語]ステージ4", "[英単語]ステージ5", "[古文単語]ステージ1",]
+export const headers = ["[英単語]ステージ1", "[英単語]ステージ2", "[英単語]ステージ3", "[英単語]ステージ4", "[英単語]ステージ5", "[古文単語315]ステージ1","[古文単語315]ステージ2"]
 
 export const init:  { [key: string]: DataType } = {
     "[英単語]ステージ1" : {
@@ -39,14 +39,31 @@ export const init:  { [key: string]: DataType } = {
             new bodyBlock("systan-data", "[英単語]総復習", "[英単語]ステージ1　(level-1)", "systan-Img", 1601, 400)
         ]
     },    
-    "[古文単語]ステージ1" : {
-        storeId: "5",
+    // "[桑原・古文単語]ステージ1" : {
+    //     storeId: "5",
+
+    //     body: [
+    //         ...bodyBlock.generateSequenceBlocks("kobun-data", "[古文単語]", "[古文単語]ステージ1　(level-1)", "kobun-tango-Img", 1, 13, 20),
+    //         new bodyBlock("kobun-data", "[古文単語]総復習", "[古文単語]ステージ1　(level-1)", "kobun-tango-Img", 1, 260)
+    //     ]
+    // },
+    "[古文単語315]ステージ1" : {
+        storeId: "6",
 
         body: [
-            ...bodyBlock.generateSequenceBlocks("kobun-data", "[古文単語]", "[古文単語]ステージ1　(level-1)", "kobun-tango-Img", 1, 13, 20),
-            new bodyBlock("kobun-data", "[古文単語]総復習", "[古文単語]ステージ1　(level-1)", "kobun-tango-Img", 1, 260)
+            ...bodyBlock.generateSequenceBlocks("kobun315-data", "[古文単語315]", "[古文単語315]ステージ1　(level-1)", "kobun-tango-Img", 1, 20, 20),
+            new bodyBlock("kobun315-data", "[古文単語315]総復習", "[古文単語315]ステージ1　(level-1)", "kobun-tango-Img", 1, 400)
         ]
-    }
+    },
+    "[古文単語315]ステージ2" : {
+        storeId: "7",
+
+        body: [
+            ...bodyBlock.generateSequenceBlocks("kobun315-data", "[古文単語315]", "[古文単語315]ステージ2　(level-2)", "kobun-tango-Img", 401, 20, 6),
+            new bodyBlock("kobun315-data", "[古文単語315] 521~536", "[古文単語315]ステージ2　(level-2)", "kobun-tango-Img", 521, 16),
+            new bodyBlock("kobun315-data", "[古文単語315]総復習", "[古文単語315]ステージ2　(level-2)", "kobun-tango-Img", 401, 136)
+        ]
+    },
 }
 
 

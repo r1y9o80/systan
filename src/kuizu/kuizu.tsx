@@ -56,6 +56,7 @@ export const Kuizu = () => {
 
   // Keysの作成
   const Keys = Object.keys(data);
+  console.log("data",data)
   const filtered: Record<string, { occurrenceRate: number; corrected: number }> = {}
   for(const key of Keys){
     filtered[key] = UserData[dataName]?.[key]
