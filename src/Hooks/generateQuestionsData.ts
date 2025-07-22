@@ -1,4 +1,4 @@
-export const useSetOccurrencerate = (
+export const useGenerateQuestionsData = (
     StageKeys: string[],
     result_log: Record<string, {"occurrenceRate": number, "corrected": number}>
 ) => {

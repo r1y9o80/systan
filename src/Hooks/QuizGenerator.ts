@@ -20,8 +20,8 @@ export const useQuizGenerator = (
   const correctKey: string = setCorrectKey(activeQuestion, inactiveQuestion, result_log)
 
   // 正解を含む選択肢を取得
-  const filtered_Keys = generateSelect(QuizData, activeQuestion, numOfChoice, correctKey);
-  console.log("filtered_Keys:", filtered_Keys);
+  const choices = generateSelect(QuizData, activeQuestion, numOfChoice, correctKey);
+  console.log("choices:", choices);
 
 
   console.log("inactiveQuestion:", inactiveQuestion);
@@ -29,7 +29,7 @@ export const useQuizGenerator = (
 
   // 状態更新
   setQuizState((prev: TypeQuizState) => ({
-    filtered_Keys,
+    choices,
     correctKey,
     numOfQuestion: prev.numOfQuestion + 1,
   }));

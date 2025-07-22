@@ -5,18 +5,18 @@ import { QuizResultState } from '../states/QuizResult';
 import { sectionState } from '../states/section';
 import type { TypeResultData, TypeResult } from '../types/Quiz_Result';
 import { userData_recoil } from '../states/userData';
-import { QuizInfo } from '../states/kuizu';
-import { TypeQuizInfo } from '../types/Quiz';
+import { dataForQuiz_recoil } from '../states/kuizu';
+import { dataForQuiz_type } from '../types/Quiz';
 
 export const Result = () => {
     const [showOnlyWrong, setShowOnlyWrong] = useState(false);
     const userData = useRecoilValue<Record<string, any>>(userData_recoil);
-    const { dataName, data } = useRecoilValue<TypeQuizInfo>(QuizInfo);
+    const { dataName, data } = useRecoilValue<dataForQuiz_type>(dataForQuiz_recoil);
     const QuizResult = useRecoilValue<TypeResultData>(QuizResultState);
     const setSection = useSetRecoilState(sectionState);
 
     if (!data) return <div>データが見つかりません</div>;
-
+    console.log("userData",userData)
     const keys = Object.keys(data);
     const result_log: Record<string, any> = {}
     for (const key of keys){

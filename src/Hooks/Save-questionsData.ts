@@ -1,41 +1,23 @@
 import { getAuth } from "firebase/auth"
 import { getFirestore, doc, updateDoc } from "firebase/firestore"
 
-export const useSavePercentage = (perItem: number, 
-    storeId: string, 
-    idx: number, 
-    CorrectPercentage: number, 
-    fieldData: number[], 
+export const useSaveQuestionsData = (
     setUserData: (updater: (prev: any) => any) => void,
     dataName: string,
     result_log: Record<string, {"occurrenceRate": number, "corrected": number}>,
 ) => {
-    
-    const newArray: number[] = generate_newArray(fieldData, perItem, idx, CorrectPercentage)
+
     setUserData(prev => {
         const newData = {
             ...prev,
-            [storeId]: newArray,
             [dataName]: prev[dataName] ? { ...prev[dataName], ...result_log } : result_log
         };
         SaveStore(newData);  // 副作用はここで呼び出す
-        return newData;
+        return newData; //これがないとresultでuserDataが読み込めない非同期エラー
     });
 
 }
 
-function generate_newArray(fieldData: number[], perItem: number, idx:number, CorrectPercentage: number){
-    let array = []
-    for(let i = 0; i<perItem; i++){
-        if(i===idx){
-            array.push(CorrectPercentage)
-        }else{
-            const value = fieldData[i] || 0
-            array.push(value)
-        }
-    }
-    return array
-}
 
 async function SaveStore(UserData: object){
     const db = getFirestore();

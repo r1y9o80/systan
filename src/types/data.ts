@@ -8,7 +8,4 @@ export interface BodyBlockType {
 }
 
 
-export type DataType = {
-    storeId: string,
-    body: BodyBlockType[]
-}
+export type DataType = BodyBlockType[]

@@ -1,46 +1,38 @@
 import React, { useRef, useEffect } from "react";
 import { memo } from "react";
 import "./header.scss";
-import { init } from "../Home-data/data";
+import { headersList } from "../Home-data/data";
 import { y_position } from "../../states/y-position";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 
-export const Header: React.FC<{ selectedKey: string, setSelectedKey: React.Dispatch<React.SetStateAction<string>> }> = memo(({ selectedKey, setSelectedKey }) => {
+export const Header: React.FC<{ activeStageKey: string, setActiveStageKey: React.Dispatch<React.SetStateAction<string>> }> = memo(({ activeStageKey, setActiveStageKey }) => {
   const itemRefs = useRef<{ [key: string]: HTMLLIElement | null }>({});
-  const isButtonClicked = useRef(false); // ボタンクリックの状態を保持
-  const [y_pos, setY_pos] = useRecoilState(y_position)
+  const setY_pos = useSetRecoilState(y_position)
 
-  useEffect(() => { //なくても動くっちゃ動く。あるほうが安全かな
-    if (itemRefs.current[selectedKey]) {
-      // ボタンがクリックされた場合のみスムーズにスクロール
-      if (isButtonClicked.current) {
-        itemRefs.current[selectedKey]?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
-        isButtonClicked.current = false; // 一度スクロールしたらフラグをリセット
-      } else {
-        // 通常のスクロール（スムーズではない）
-        itemRefs.current[selectedKey]?.scrollIntoView({ block: "nearest", inline: "center" });
-      }
-    }
-  }, [selectedKey]);
 
-  const handleClick = (stageKey: string) => {
+  //マウンティング時、以前のステージへ移動
+  useEffect(() => { 
+    itemRefs.current[activeStageKey]?.scrollIntoView({ block: "nearest", inline: "center" });
+  }, []);
+
+  //ヘッダーのステージ選択ボタンが押されたときの処理
+  const handleClick = (newActiveStageKey: string) => {
     setY_pos(0)
-    console.log(y_pos)
-    setSelectedKey(stageKey);
-    isButtonClicked.current = true; // ボタンがクリックされたことを記録
+    setActiveStageKey(newActiveStageKey);
+    itemRefs.current[newActiveStageKey]?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" })
   };
 
   return (
     <header>
       <ul className="scrollable-list">
-        {Object.entries(init).map(([stageKey, _], index) => (
+        {Object.entries(headersList).map(([_, newActiveStageKey], index) => (
           <li
             key={index}
-            ref={(el) => { itemRefs.current[stageKey] = el; }}
-            onClick={() => handleClick(stageKey)}  // ボタンがクリックされたときにhandleClickを呼び出し
-            style={stageKey === selectedKey ? { borderBottom: "2px solid blue" } : {}}
+            ref={(el) => { itemRefs.current[newActiveStageKey] = el; }}
+            onClick={() => handleClick(newActiveStageKey)}  // ボタンがクリックされたときにhandleClickを呼び出し
+            style={newActiveStageKey === activeStageKey ? { borderBottom: "2px solid blue" } : {}}
           >
-            {stageKey}
+            {newActiveStageKey}
           </li>
         ))}
       </ul>

@@ -3,20 +3,19 @@ import { useState, useEffect, useRef } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { sectionState } from "../states/section";
 import { QuizResultState } from "../states/QuizResult";
-import { QuizInfo } from "../states/kuizu";
-import { pre_Stage_percentageArray } from "../states/pre-Stage-percentagesArray";
+import { dataForQuiz_recoil } from "../states/kuizu";
 import { useCorrectJudge } from "../Hooks/correctJudge";
 import { useQuizGenerator } from "../Hooks/QuizGenerator";
-import { useSavePercentage } from "../Hooks/Save-Percentage";
+import { useSaveQuestionsData } from "../Hooks/Save-questionsData";
 import { useEnglish_read } from "../Hooks/English-read";
-import type { TypeQuizInfo, TypeQuizState } from "../types/Quiz";
+import type { dataForQuiz_type, TypeQuizState } from "../types/Quiz";
 import type { TypeResult } from "../types/Quiz_Result";
 import { useQuizResultSend } from "../Hooks/QuizResultSend";
 import { userData_recoil } from "../states/userData";
 import { settings_recoil } from "../states/settings";
-import { useSetOccurrencerate } from "../Hooks/generateOccurrenceRate";
+import { useGenerateQuestionsData } from "../Hooks/generateQuestionsData";
 
-type GenerateDataType = {
+type dataForQuestionGenerateType = {
   activeQuestion: string[];
   inactiveQuestion: string[];
   select: string[];
@@ -29,70 +28,59 @@ export const Kuizu = () => {
   const [UserData, setUserData] = useRecoilState<Record<string, any>>(userData_recoil);
   const setSection = useSetRecoilState(sectionState);
   const setQuizResult = useSetRecoilState(QuizResultState);
-  const fieldData = useRecoilValue(pre_Stage_percentageArray);
-  const { data, title, perItem, storeId, idx, dataName } = useRecoilValue<TypeQuizInfo>(QuizInfo);
+  const { data, title, dataName } = useRecoilValue<dataForQuiz_type>(dataForQuiz_recoil);
 
   // 初期チェック
   if (!data) return <div>データを読み込めませんでした</div>;
 
   // 問題数など定数
-  const SumOfQuestion = 20;
+  const SumOfQuestion = 5;
   const numOfChoice = unKnow_Buttn ? numOfNormalChoices + 1 : numOfNormalChoices;
 
   // RefやState
-  const generateData = useRef<GenerateDataType>({
+  const dataForQuestionGenerate = useRef<dataForQuestionGenerateType>({ //n問以内での重複を許さないため
     activeQuestion: [],
     inactiveQuestion: [],
     select: [],
   });
   const Quiz_log = useRef<TypeResult[]>([]);
   const sumOfCorrect = useRef<number>(0);
-  const [screenState, setScreenState] = useState<string>("solved");
+  const [screenState, setScreenState] = useState<string>("solved"); //クイズセクション内での画面状態を管理。
   const [quizState, setQuizState] = useState<TypeQuizState>({
-    filtered_Keys: [],
-    correctKey: "",
-    numOfQuestion: 0,
+    choices: [], //選択肢
+    correctKey: "", //正解番号
+    numOfQuestion: 0, //問題番号
   });
-
-  // Keysの作成
+  const result_log = useRef<Record<string, { occurrenceRate: number; corrected: number }>>({});
   const Keys = Object.keys(data);
-  console.log("data",data)
-  const filtered: Record<string, { occurrenceRate: number; corrected: number }> = {}
-  for(const key of Keys){
-    filtered[key] = UserData[dataName]?.[key]
-  }
-
-  const result_log = useRef<Record<string, { occurrenceRate: number; corrected: number }>>(filtered);
-
-
-  // 初回のみ実行：クイズの準備
+  
+  // 初回のみ実行：クイズの準備（初期設定、初期デバッグ）
   useEffect(() => {
-    useSetOccurrencerate(Keys, result_log.current)
-    console.log("occurrence",result_log.current)
-    generateData.current = {
+    console.log("data",data)
+    console.log("useData",UserData)
+    for(const key of Keys){
+      result_log.current[key] = {...UserData[dataName]?.[key]}
+    }
+    useGenerateQuestionsData(Keys, result_log.current) //データベースに保存されていなくても、問題すべてに対して設定(出現率、正誤未）定義➡後でundefined判定いらない
+    console.log("occurrence",result_log.current) //上関数のデバッグ
+    dataForQuestionGenerate.current = {
       activeQuestion: [...Keys],
       inactiveQuestion: [],
       select: [...Keys],
     };
     if (Keys.length) {
-      useQuizGenerator(data, generateData, numOfChoice, setQuizState, result_log.current);
+      useQuizGenerator(data, dataForQuestionGenerate, numOfChoice, setQuizState, result_log.current);
     }
   }, []);
-
+  
   // ローディング中
-  if (!quizState.filtered_Keys.length) return <div>読み込み中...</div>;
+  if (!quizState.choices.length) return <div>読み込み中...</div>;
+  
+  const { choices, correctKey, numOfQuestion } = quizState;
+  console.log("choices", choices)
 
-  const { filtered_Keys, correctKey, numOfQuestion } = quizState;
-
-  // 背景色・ボタンスタイル計算
-  const getBackgroundColor = () => {
-    if (screenState === "ConfirmedTrue") return "rgba(0, 153, 248, 0.403)";
-    if (screenState === "ConfirmedFalse") return "rgba(255, 115, 103, 0.885)";
-    return "transparent";
-  };
-
-  const backgroundColor = getBackgroundColor();
-
+  //正誤時の背景色を設定
+  const backgroundColor = ((screenState === "ConfirmedTrue") && "rgba(0, 153, 248, 0.403)") || ((screenState === "ConfirmedFalse") && "rgba(255, 115, 103, 0.885)") || "transparent"
   const buttonStyle = (key: string) => {
     if (screenState === "ConfirmedTrue" && key === correctKey)
       return { backgroundColor: "rgba(0, 153, 248, 0.403)" };
@@ -104,41 +92,23 @@ export const Kuizu = () => {
   // 回答ボタンクリック時処理
   const handleButtonClick = (inputKey: string) => {
     if (screenState !== "solved") return;
-
     useCorrectJudge(correctKey, inputKey, setScreenState, sumOfCorrect, result_log.current);
-
-    Quiz_log.current.push({ choices: filtered_Keys, correctKey, inputKey });
+    Quiz_log.current.push({ choices: choices, correctKey, inputKey });
   };
 
   // 次の問題へ or 結果画面へ移行
   const handleBodyClick = () => {
     if (screenState !== "ConfirmedTrue" && screenState !== "ConfirmedFalse") return;
 
-    if (numOfQuestion >= SumOfQuestion) {
+    if (numOfQuestion >= SumOfQuestion) { //問題終了の処理
       const CorrectPercentage = Math.floor((sumOfCorrect.current * 100) / numOfQuestion);
-
-      useSavePercentage(
-        perItem,
-        storeId,
-        idx,
-        CorrectPercentage,
-        fieldData,
-        setUserData,
-        dataName,
-        result_log.current,
-      );
-
+      useSaveQuestionsData(setUserData, dataName, result_log.current,);
       useQuizResultSend(title, CorrectPercentage);
-
-      setQuizResult({
-        data,
-        result: Quiz_log.current,
-        CorrectPercentage,
-      });
-
+      setQuizResult({data, result: Quiz_log.current, CorrectPercentage,});
       setSection("result");
+
     } else {
-      useQuizGenerator(data, generateData, numOfChoice, setQuizState, result_log.current);
+      useQuizGenerator(data, dataForQuestionGenerate, numOfChoice, setQuizState, result_log.current);
       setScreenState("solved");
     }
   };
@@ -162,7 +132,7 @@ export const Kuizu = () => {
         </div>
 
         <div id="buttons_div">
-          {filtered_Keys.slice(0, numOfChoice - (unKnow_Buttn ? 1 : 0)).map((key, i) => (
+          {choices.slice(0, numOfChoice - (unKnow_Buttn ? 1 : 0)).map((key, i) => (
             <button
               key={`idx${i}`}
               className="button"
@@ -175,8 +145,8 @@ export const Kuizu = () => {
           {unKnow_Buttn && (
             <button
               className="button"
-              onClick={() => handleButtonClick(filtered_Keys[numOfChoice - 1])}
-              style={buttonStyle(filtered_Keys[numOfChoice - 1])}
+              onClick={() => handleButtonClick(choices[numOfChoice - 1])}
+              style={buttonStyle(choices[numOfChoice - 1])}
             >
               この中にはない
             </button>

@@ -9,8 +9,9 @@ import { Message } from "../Message/message.tsx"
 import { userData_recoil } from "../states/userData.ts"
 
 export const Home = memo(() => {
-  const [selectedKey, setSelectedKey] = useRecoilState(setting_header);
+  const [activeStageKey, setActiveStageKey] = useRecoilState(setting_header);
   const [userData, setUserData] = useRecoilState<Record<string,any>>(userData_recoil);
+  console.log("userData",userData)
 
   useEffect(() => {
     console.log(userData["messageShown"])
@@ -27,8 +28,8 @@ export const Home = memo(() => {
   return (
     <div id="setting">
       {userData["messageShown"] === false && <Message />}
-      <Header selectedKey={selectedKey} setSelectedKey={setSelectedKey} />
-      <Body selectedKey={selectedKey} />
+      <Header activeStageKey={activeStageKey} setActiveStageKey={setActiveStageKey} />
+      <Body activeStageKey={activeStageKey} />
       <Menu />
     </div>
   );
