@@ -5,7 +5,8 @@ import { sectionState } from "../states/section";
 import { QuizResultState } from "../states/QuizResult";
 import { dataForQuiz_recoil } from "../states/kuizu";
 import { useCorrectJudge } from "../Hooks/correctJudge";
-import { useQuizGenerator } from "../Hooks/QuizGenerator";
+import { useQuestionGenerate } from "../Hooks/generateQuestion";
+import { useChoicesGenerator } from "../Hooks/generateChoice";
 import { useSaveQuestionsData } from "../Hooks/Save-questionsData";
 import { useEnglish_read } from "../Hooks/English-read";
 import type { dataForQuiz_type, TypeQuizState } from "../types/Quiz";
@@ -38,49 +39,70 @@ export const Kuizu = () => {
   const numOfChoice = unKnow_Buttn ? numOfNormalChoices + 1 : numOfNormalChoices;
 
   // RefやState
-  const dataForQuestionGenerate = useRef<dataForQuestionGenerateType>({ //n問以内での重複を許さないため
+  const dataForQuestionGenerate = useRef<dataForQuestionGenerateType>({
     activeQuestion: [],
     inactiveQuestion: [],
     select: [],
   });
   const Quiz_log = useRef<TypeResult[]>([]);
   const sumOfCorrect = useRef<number>(0);
-  const [screenState, setScreenState] = useState<string>("solved"); //クイズセクション内での画面状態を管理。
+  const [screenState, setScreenState] = useState<string>("solved");
   const [quizState, setQuizState] = useState<TypeQuizState>({
-    choices: [], //選択肢
-    correctKey: "", //正解番号
-    numOfQuestion: 0, //問題番号
+    choices: [],
+    correctKey: "",
+    numOfQuestion: 0,
   });
-  const result_log = useRef<Record<string, { occurrenceRate: number; corrected: number }>>({});
+  const questionsData = useRef<Record<string, { occurrenceRate: number; corrected: number }>>({});
   const Keys = Object.keys(data);
-  
-  // 初回のみ実行：クイズの準備（初期設定、初期デバッグ）
+
+  // クイズ生成関数をまとめる
+  const generateNextQuiz = () => {
+    const correctKey = useQuestionGenerate(dataForQuestionGenerate, questionsData.current);
+    const choices = useChoicesGenerator(data, Keys, correctKey, numOfChoice);
+    console.log("correctKey", correctKey);
+    console.log("choices", choices);
+
+    setQuizState((prev) => ({
+      correctKey,
+      choices,
+      numOfQuestion: prev.numOfQuestion + 1,
+    }));
+    setScreenState("solved");
+  };
+
+  // 初回のみ実行：クイズの準備
   useEffect(() => {
-    console.log("data",data)
-    console.log("useData",UserData)
-    for(const key of Keys){
-      result_log.current[key] = {...UserData[dataName]?.[key]}
+    console.log("data", data);
+    console.log("useData", UserData);
+    for (const key of Keys) {
+      questionsData.current[key] = { ...UserData[dataName]?.[key] };
     }
-    useGenerateQuestionsData(Keys, result_log.current) //データベースに保存されていなくても、問題すべてに対して設定(出現率、正誤未）定義➡後でundefined判定いらない
-    console.log("occurrence",result_log.current) //上関数のデバッグ
+    useGenerateQuestionsData(Keys, questionsData.current);
+    console.log("occurrence", questionsData.current);
+
     dataForQuestionGenerate.current = {
       activeQuestion: [...Keys],
       inactiveQuestion: [],
       select: [...Keys],
     };
+
     if (Keys.length) {
-      useQuizGenerator(data, dataForQuestionGenerate, numOfChoice, setQuizState, result_log.current);
+      generateNextQuiz();
     }
   }, []);
-  
+
   // ローディング中
   if (!quizState.choices.length) return <div>読み込み中...</div>;
-  
-  const { choices, correctKey, numOfQuestion } = quizState;
-  console.log("choices", choices)
 
-  //正誤時の背景色を設定
-  const backgroundColor = ((screenState === "ConfirmedTrue") && "rgba(0, 153, 248, 0.403)") || ((screenState === "ConfirmedFalse") && "rgba(255, 115, 103, 0.885)") || "transparent"
+  const { choices, correctKey, numOfQuestion } = quizState;
+  console.log("choices", choices);
+
+  // 正誤時の背景色設定
+  const backgroundColor =
+    (screenState === "ConfirmedTrue" && "rgba(0, 153, 248, 0.403)") ||
+    (screenState === "ConfirmedFalse" && "rgba(255, 115, 103, 0.885)") ||
+    "transparent";
+
   const buttonStyle = (key: string) => {
     if (screenState === "ConfirmedTrue" && key === correctKey)
       return { backgroundColor: "rgba(0, 153, 248, 0.403)" };
@@ -89,27 +111,26 @@ export const Kuizu = () => {
     return {};
   };
 
-  // 回答ボタンクリック時処理
+  // 回答ボタンクリック時処理(選択肢クリックで)
   const handleButtonClick = (inputKey: string) => {
     if (screenState !== "solved") return;
-    useCorrectJudge(correctKey, inputKey, setScreenState, sumOfCorrect, result_log.current);
+    useCorrectJudge(correctKey, inputKey, setScreenState, sumOfCorrect, questionsData.current);
     Quiz_log.current.push({ choices: choices, correctKey, inputKey });
   };
 
-  // 次の問題へ or 結果画面へ移行
+
+  // 次の問題へ or 結果画面へ移行(答え表示画面中、画面タップで)
   const handleBodyClick = () => {
-    if (screenState !== "ConfirmedTrue" && screenState !== "ConfirmedFalse") return;
+    if (screenState !== "ConfirmedTrue" && screenState !== "ConfirmedFalse") return; //答え表示画面の時以外ブロック
 
-    if (numOfQuestion >= SumOfQuestion) { //問題終了の処理
+    if (numOfQuestion >= SumOfQuestion) {
       const CorrectPercentage = Math.floor((sumOfCorrect.current * 100) / numOfQuestion);
-      useSaveQuestionsData(setUserData, dataName, result_log.current,);
+      useSaveQuestionsData(setUserData, dataName, questionsData.current);
       useQuizResultSend(title, CorrectPercentage);
-      setQuizResult({data, result: Quiz_log.current, CorrectPercentage,});
+      setQuizResult({ data, result: Quiz_log.current, CorrectPercentage });
       setSection("result");
-
     } else {
-      useQuizGenerator(data, dataForQuestionGenerate, numOfChoice, setQuizState, result_log.current);
-      setScreenState("solved");
+      generateNextQuiz();
     }
   };
 
