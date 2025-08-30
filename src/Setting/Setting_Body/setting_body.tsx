@@ -42,14 +42,15 @@ export const Setting_Body = ({ logOut }: Props) => {
   return (
     <div className="setting-container">
       <button className="logout_button" onClick={logOut}>ログアウト</button>
-
-      <label htmlFor="selectSum" className="setting-selectSum_label">選択肢数(この中にはないを含まない)</label>
-      <select id="selectSum" value={settingData.selectSum} onChange={(e) => handleSelectChange(e,"selectSum")}>
-        <option value={2}>2</option>
-        <option value={3}>3</option>
-        <option value={4}>4</option>
-        <option value={5}>5</option>
-      </select>
+      <div className="select_container">
+        <label htmlFor="selectSum" className="setting-selectSum_label">選択肢数(この中にはないを含まない)</label>
+        <select id="selectSum" value={settingData.selectSum} onChange={(e) => handleSelectChange(e,"selectSum")}>
+          <option value={2}>2</option>
+          <option value={3}>3</option>
+          <option value={4}>4</option>
+          <option value={5}>5</option>
+        </select>
+      </div>
 
       <div className="toggle-div">
         <p className="toggle-p">この中にはないON/OFF</p>
