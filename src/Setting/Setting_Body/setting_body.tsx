@@ -15,17 +15,17 @@ export const Setting_Body = ({ logOut }: Props) => {
   // カスタムフックならトップレベルで呼ぶ（例）
   // const sendTextSned = useTextSned();
 
-  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>,id: string) => {
     setSettings(prev => ({
       ...prev,
-      selectSum: Number(e.target.value),
+      [id]: Number(e.target.value),
     }));
   };
 
-  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>,id: string) => {
     setSettings(prev => ({
       ...prev,
-      noneInSelect_Active: e.target.checked,
+      [id]: e.target.checked,
     }));
   };
 
@@ -43,8 +43,8 @@ export const Setting_Body = ({ logOut }: Props) => {
     <div className="setting-container">
       <button className="logout_button" onClick={logOut}>ログアウト</button>
 
-      <label htmlFor="selectSum" className="setting-selectSum_label">問題数(この中にはないを含まない)</label>
-      <select id="selectSum" value={settingData.selectSum} onChange={handleSelectChange}>
+      <label htmlFor="selectSum" className="setting-selectSum_label">選択肢数(この中にはないを含まない)</label>
+      <select id="selectSum" value={settingData.selectSum} onChange={(e) => handleSelectChange(e,"selectSum")}>
         <option value={2}>2</option>
         <option value={3}>3</option>
         <option value={4}>4</option>
@@ -57,9 +57,38 @@ export const Setting_Body = ({ logOut }: Props) => {
           <input
             type="checkbox"
             checked={settingData.noneInSelect_Active}
-            onChange={handleCheckboxChange}
+            onChange= {(e) => handleCheckboxChange(e,"noneInSelect_Active")}
           />
         </label>
+      </div>
+
+      <div className="selects_container">
+        <label htmlFor="questonSum" className="questionSum_label">問題数</label>
+        <select id="questionSum" value={settingData.questionSum} onChange={(e) => handleSelectChange(e,"questionSum")}>
+          <option value={10}>10</option>
+          <option value={20}>20</option>
+          <option value={30}>30</option>
+          <option value={40}>40</option>
+        </select>
+      </div>
+
+      <div className="selects_container">
+        <label htmlFor="deduplicationRange" >n問以内の問題重複を許さない</label>
+        <select id="deduplicationRange" value={settingData.deduplicationRange} onChange={(e) => handleSelectChange(e,"deduplicationRange")}>
+          <option value={0}>0</option>
+          <option value={5}>5</option>
+          <option value={10}>10</option>
+        </select>
+      </div>
+
+      <div className="selects_container">
+        <label htmlFor="selectWeight" >正解問題が出にくくなる</label>
+        <select id="selectWeight" value={settingData.selectWeight} onChange={(e) => handleSelectChange(e,"selectWeight")}>
+          <option value={1}>変化なし</option>
+          <option value={2}>2倍</option>
+          <option value={5}>5倍</option>
+          <option value={10}>10倍</option>
+        </select>
       </div>
 
       <div className="messageForm">

@@ -1,4 +1,4 @@
-type dataForGenerateType = {
+type dataForGenerate_RefType = {
   activeQuestion: string[];
   inactiveQuestion: string[];
   select: string[];
@@ -6,11 +6,15 @@ type dataForGenerateType = {
 
 
 export const useQuestionGenerate = (
-    dataForGenerate: React.RefObject<dataForGenerateType>,
+    dataForGenerate_Ref: React.RefObject<dataForGenerate_RefType>,
     questionData: Record<string, { occurrenceRate: number; corrected: number }>,
+    deduplicationRange: number,
+    selectWeight: number
 ) => {
-    const correctKey = selectkey(dataForGenerate.current["activeQuestion"], questionData)
-    setActiveKey(correctKey, dataForGenerate)
+    const dataForGenerate_active = dataForGenerate_Ref.current["activeQuestion"]
+    const correctKey = (selectWeight != 1)? selectkey(dataForGenerate_active, questionData): dataForGenerate_active[Math.random() * (dataForGenerate_active.length-1)]
+    console.log("active: ",dataForGenerate_Ref.current["activeQuestion"])
+    setActiveKey(correctKey, dataForGenerate_Ref, deduplicationRange)
     return correctKey
 
 };
@@ -38,13 +42,14 @@ function selectkey(
 //activeKeys(inActiveKeys)更新
 function setActiveKey(
     correctKey: string,
-    dataForGenerate: React.RefObject<dataForGenerateType>,
+    dataForGenerate_Ref: React.RefObject<dataForGenerate_RefType>,
+    deduplicationRange: number,
 ){
-    if(!dataForGenerate.current) return //ありえない
-    dataForGenerate.current["activeQuestion"] = dataForGenerate.current["activeQuestion"].filter(e => e != correctKey) //漸化的に減っていく
-    dataForGenerate.current["inactiveQuestion"].push(correctKey) //後ろに追加
-    if(dataForGenerate.current["inactiveQuestion"].length >= 5){
-        const restored = dataForGenerate.current["inactiveQuestion"].shift() //前から削除➡pushとshiftで漸化的に順番にactiveへ移動していく
-        restored && dataForGenerate.current["activeQuestion"].push(restored)
+    if(!dataForGenerate_Ref.current) return //ありえない
+    dataForGenerate_Ref.current["activeQuestion"] = dataForGenerate_Ref.current["activeQuestion"].filter(e => e != correctKey) //漸化的に減っていく
+    dataForGenerate_Ref.current["inactiveQuestion"].push(correctKey) //後ろに追加
+    if(dataForGenerate_Ref.current["inactiveQuestion"].length >= deduplicationRange){
+        const restored = dataForGenerate_Ref.current["inactiveQuestion"].shift() //前から削除➡pushとshiftで漸化的に順番にactiveへ移動していく
+        restored && dataForGenerate_Ref.current["activeQuestion"].push(restored)
     }
 }

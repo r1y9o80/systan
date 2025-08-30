@@ -24,8 +24,10 @@ type dataForQuestionGenerateType = {
 
 export const Kuizu = () => {
   // Recoil値・状態
+  const numOfQuestion = useRef(1)
   const settingData = useRecoilValue(settings_recoil);
-  const { noneInSelect_Active: unKnow_Buttn, selectSum: numOfNormalChoices } = settingData;
+  console.log("settingData",settingData)
+  const { noneInSelect_Active: unKnow_Buttn, selectSum: numOfNormalChoices, questionSum, deduplicationRange, selectWeight } = settingData;
   const [UserData, setUserData] = useRecoilState<Record<string, any>>(userData_recoil);
   const setSection = useSetRecoilState(sectionState);
   const setQuizResult = useSetRecoilState(QuizResultState);
@@ -34,8 +36,6 @@ export const Kuizu = () => {
   // 初期チェック
   if (!data) return <div>データを読み込めませんでした</div>;
 
-  // 問題数など定数
-  const SumOfQuestion = 5;
   const numOfChoice = unKnow_Buttn ? numOfNormalChoices + 1 : numOfNormalChoices;
 
   // RefやState
@@ -49,25 +49,21 @@ export const Kuizu = () => {
   const [screenState, setScreenState] = useState<string>("solved");
   const [quizState, setQuizState] = useState<TypeQuizState>({
     choices: [],
-    correctKey: "",
-    numOfQuestion: 0,
+    correctKey: [],
   });
   const questionsData = useRef<Record<string, { occurrenceRate: number; corrected: number }>>({});
   const Keys = Object.keys(data);
 
   // クイズ生成関数をまとめる
   const generateNextQuiz = () => {
-    const correctKey = useQuestionGenerate(dataForQuestionGenerate, questionsData.current);
+    const correctKey = useQuestionGenerate(dataForQuestionGenerate, questionsData.current, deduplicationRange, selectWeight);
     const choices = useChoicesGenerator(data, Keys, correctKey, numOfChoice);
     console.log("correctKey", correctKey);
     console.log("choices", choices);
-
     setQuizState((prev) => ({
-      correctKey,
-      choices,
-      numOfQuestion: prev.numOfQuestion + 1,
+      correctKey: [...prev.correctKey, correctKey],
+      choices: [...prev.choices, choices],
     }));
-    setScreenState("solved");
   };
 
   // 初回のみ実行：クイズの準備
@@ -86,16 +82,17 @@ export const Kuizu = () => {
       select: [...Keys],
     };
 
-    if (Keys.length) {
-      generateNextQuiz();
+    for(let i = 0; i<5; i++){
+      generateNextQuiz()
     }
   }, []);
 
   // ローディング中
   if (!quizState.choices.length) return <div>読み込み中...</div>;
-
-  const { choices, correctKey, numOfQuestion } = quizState;
-  console.log("choices", choices);
+  
+  console.log(quizState)
+  const correctKey = quizState.correctKey[numOfQuestion.current - 1];
+  const choices = quizState.choices[numOfQuestion.current - 1];
 
   // 正誤時の背景色設定
   const backgroundColor =
@@ -114,7 +111,7 @@ export const Kuizu = () => {
   // 回答ボタンクリック時処理(選択肢クリックで)
   const handleButtonClick = (inputKey: string) => {
     if (screenState !== "solved") return;
-    useCorrectJudge(correctKey, inputKey, setScreenState, sumOfCorrect, questionsData.current);
+    useCorrectJudge(correctKey, inputKey, setScreenState, sumOfCorrect, questionsData.current, selectWeight);
     Quiz_log.current.push({ choices: choices, correctKey, inputKey });
   };
 
@@ -123,14 +120,16 @@ export const Kuizu = () => {
   const handleBodyClick = () => {
     if (screenState !== "ConfirmedTrue" && screenState !== "ConfirmedFalse") return; //答え表示画面の時以外ブロック
 
-    if (numOfQuestion >= SumOfQuestion) {
-      const CorrectPercentage = Math.floor((sumOfCorrect.current * 100) / numOfQuestion);
+    if (numOfQuestion.current >= questionSum) {
+      const CorrectPercentage = Math.floor((sumOfCorrect.current * 100) / questionSum);
       useSaveQuestionsData(setUserData, dataName, questionsData.current);
       useQuizResultSend(title, CorrectPercentage);
       setQuizResult({ data, result: Quiz_log.current, CorrectPercentage });
       setSection("result");
     } else {
-      generateNextQuiz();
+      numOfQuestion.current += 1
+      if(quizState.correctKey.length < questionSum)generateNextQuiz();
+      setScreenState("solved");
     }
   };
 
@@ -141,7 +140,7 @@ export const Kuizu = () => {
     <div id="kuizu">
       <header id="header">
         <h4 id="header_title">{title}</h4>
-        <h4 id="header_numbers">{`${numOfQuestion}/${SumOfQuestion}`}</h4>
+        <h4 id="header_numbers">{`${numOfQuestion.current}/${questionSum}`}</h4>
         <button id="header_button" onClick={() => setSection("home")}>
           終
         </button>
