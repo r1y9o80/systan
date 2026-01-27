@@ -1,5 +1,5 @@
 import "./test.scss"
-import { useState, useRef } from "react";
+import { useState, useRef, useMemo } from "react";
 import { useSetRecoilState, useRecoilValue } from "recoil";
 import { sectionState } from "../states/section";
 import { toList } from "../states/list";
@@ -20,7 +20,7 @@ export const Test = () => {
     return null;
   }
 
-  const keys = shuffle(Object.keys(data));
+  const keys = useMemo(() => shuffle(Object.keys(data)), [data]);
   const totalQuestions = keys.length;
 
   const [current, setCurrent] = useState(0);

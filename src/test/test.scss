@@ -69,12 +69,4 @@
   background: #fff;
   cursor: pointer;
   transition: transform 0.1s, box-shadow 0.1s;
-
-  &:hover {
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  }
-
-  &:active {
-    transform: translateY(1px);
-  }
 }
