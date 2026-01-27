@@ -1,0 +1,127 @@
+/* ===== ページ全体 ===== */
+.list-page {
+  padding: 24px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* ===== 上部アクション ===== */
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+
+.list-title {
+  margin: 0 0 16px;
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #333;
+  letter-spacing: 0.05em;
+}
+
+
+/* ===== ボタン共通 ===== */
+.btn {
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.1s ease;
+
+  &:active {
+    transform: translateY(1px);
+  }
+}
+
+/* 戻る */
+.btn.secondary {
+  background: #e9edf5;
+  color: #333;
+
+  &:hover {
+    background: #dde3f0;
+  }
+}
+
+/* テスト */
+.btn.primary {
+  background: #2c7be5;
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(44, 123, 229, 0.25);
+
+  &:hover {
+    background: #1f6ad6;
+  }
+}
+
+/* ===== テーブルラッパー ===== */
+/* 横スクロールは必要な時だけ */
+.table-wrapper {
+  display: flex;
+  justify-content: center;
+  overflow-x: auto;
+
+  margin-top: 12px;
+
+  border: 1px solid #2c7be5;     // はっきりした外枠
+  background: #ffffff;
+
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+/* ===== テーブル本体 ===== */
+.word-table {
+  margin: 0 auto; /* ← 中央寄せの本命 */
+  border-collapse: collapse;
+  table-layout: auto;
+  background: #fff;
+
+  th,
+  td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+    white-space: nowrap;
+    font-size: clamp(12px, 2.8vw, 14px);
+  }
+
+  th {
+    background: #2c7be5;
+    color: #fff;
+    font-weight: 600;
+  }
+
+  tr:nth-child(even) {
+    background: #f0f4ff;
+  }
+
+  /* 問題番号：内容フィット（最大4桁） */
+/* 問題番号：完全フィット */
+    th:nth-child(1),
+    td:nth-child(1) {
+    padding: 8px 6px;              // 横を最小限に
+    font-variant-numeric: tabular-nums;
+    width: 1%;                     // ← これが効く
+    }
+
+
+  /* 英単語 */
+  th:nth-child(2),
+  td:nth-child(2) {
+    max-width: 140px;
+  }
+
+  /* 意味 */
+  th:nth-child(3),
+  td:nth-child(3) {
+    max-width: 220px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

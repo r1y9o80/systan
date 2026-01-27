@@ -6,6 +6,8 @@ import { dataForQuiz_recoil } from "../../states/kuizu.ts";
 import { sectionState } from "../../states/section.ts";
 import { y_position } from "../../states/y-position.ts";
 import { userData_recoil } from "../../states/userData.ts";
+import { toList } from "../../states/list.ts";
+
 
 //データ()
 import { init } from "../Home-data/data.tsx";
@@ -27,7 +29,8 @@ import { useGetJsonData } from "../../Hooks/GetJsonData.ts";
 const imgNames: Record<string, string> = { "kobun-tango-Img": kobun_tangoImg, "systan-Img": systanImg }
 
 export const Body: React.FC<{ activeStageKey: string }> = memo(({ activeStageKey }) => {
-    const setDataForQuiz = useSetRecoilState<dataForQuiz_type>(dataForQuiz_recoil); //
+    const setDataForQuiz = useSetRecoilState<dataForQuiz_type>(dataForQuiz_recoil);
+    const setToList = useSetRecoilState(toList)
     const setSection = useSetRecoilState(sectionState);
     const stageData: DataType = init[activeStageKey]; //ブロック生成のためのデータ
     //以下２つで画面スクロールを制御
@@ -40,12 +43,19 @@ export const Body: React.FC<{ activeStageKey: string }> = memo(({ activeStageKey
     }, [y_pos]);
     const userData = useRecoilValue<Record<string,any>>(userData_recoil)
 
-    const transKuizu = async (dataName: string, startItem: number, perItem: number, title: string,idx:number) => {
+    const trans = async (dataName: string, startItem: number, perItem: number, title: string,idx:number, destination: string) => {
         console.log("dataName",dataName)
         scrollRef.current?.scrollTop && setY_pos(scrollRef.current?.scrollTop)
         const data = await useGetJsonData(dataName, startItem, perItem);
-        setSection("kuizu");
-        setDataForQuiz({ data, title, perItem, idx, dataName});
+        console.log("data:",data)
+        if(destination === "kuizu"){
+            setSection("kuizu");
+            setDataForQuiz({ data, title, perItem, idx, dataName});
+        }
+        if(destination === "list"){
+            setSection("list")
+            setToList({ data, title })
+        }
 
     };
 
@@ -73,8 +83,8 @@ export const Body: React.FC<{ activeStageKey: string }> = memo(({ activeStageKey
                             </h4>
                         </div>
                         <div className="subtitle_div"><h5 className="subtitle">{subtitle}<span className="label_span"></span></h5></div>
-                        <button className="button1" onClick={() => transKuizu(dataName, start, totalNum, title,i)}>学習</button>
-                        <button className="button2" onClick={() => setSection("list")}>一覧</button>
+                        <button className="button1" onClick={() => trans(dataName, start, totalNum, title,i,"kuizu")}>学習</button>
+                        <button className="button2" onClick={() => trans(dataName, start, totalNum, title,i,"list")}>一覧</button>
                     </div>
                 );
             })}

@@ -1,0 +1,80 @@
+/* ===== root ===== */
+.test-body {
+  width: 100%;
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  background: #f5f7fb;
+  overflow-x: hidden; // 念のため
+}
+
+/* ===== header ===== */
+#header {
+  width: 100%;
+  height: 50px;
+  box-sizing: border-box; // ← 超重要
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: #2c7be5;
+  color: #fff;
+}
+
+#header_button {
+  height: 35px;
+  background: #fff;
+  color: #2c7be5;
+  border: none;
+  border-radius: 999px;
+  padding: 6px 14px;
+  cursor: pointer;
+}
+
+/* ===== main ===== */
+.test-main {
+  flex: 1;
+  padding: 32px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; // 横方向中央
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+/* ===== question ===== */
+.question {
+  width: 100%;
+  max-width: 600px;
+  font-size: 28px;
+  margin-top: 20px;
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+/* ===== choices ===== */
+.choices {
+  width: 100%;
+  max-width: 420px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.choice-btn {
+  padding: 14px;
+  font-size: 16px;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.1s;
+
+  &:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+}

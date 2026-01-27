@@ -7,10 +7,12 @@ import { Home } from "./Home/Home.tsx";
 import { Kuizu } from "./kuizu/kuizu.tsx";
 import { Result } from "./result/result.tsx";
 import { List } from "./list/list.tsx";
+import { Test } from "./test/test.tsx";
 import { SignIn } from "./signIn/SignIn.tsx";
 import { Setting } from "./Setting/Setting.tsx";
 import { Maint } from "./maintenance/maintenance.tsx";
 import { GetUserData } from "./getUserData.tsx";
+import { TestResult } from "./testResult/testResult.tsx";
 
 function AppContent({ logOut }: { logOut: () => Promise<void> }) {
   const in_maintenance = false; // メンテナンスモードON/OFF切り替え
@@ -28,6 +30,8 @@ function AppContent({ logOut }: { logOut: () => Promise<void> }) {
       {section === "kuizu" && <Kuizu />}
       {section === "result" && <Result />}
       {section === "list" && <List />}
+      {section === "test" && <Test />}
+      {section === "testResult" && <TestResult />}
     </>
   );
 }

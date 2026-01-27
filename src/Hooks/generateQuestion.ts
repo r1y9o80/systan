@@ -12,9 +12,10 @@ export const useQuestionGenerate = (
     selectWeight: number
 ) => {
     const dataForGenerate_active = dataForGenerate_Ref.current["activeQuestion"]
-    const correctKey = (selectWeight != 1)? selectkey(dataForGenerate_active, questionData): dataForGenerate_active[Math.random() * (dataForGenerate_active.length-1)]
-    console.log("active: ",dataForGenerate_Ref.current["activeQuestion"])
+    const correctKey = (selectWeight != 1)? selectkey(dataForGenerate_active, questionData): dataForGenerate_active[Math.floor(Math.random() * (dataForGenerate_active.length-1))]
+    console.log("active: ", dataForGenerate_Ref)
     setActiveKey(correctKey, dataForGenerate_Ref, deduplicationRange)
+    console.log("correctKey: ", correctKey)
     return correctKey
 
 };
@@ -49,6 +50,7 @@ function setActiveKey(
     dataForGenerate_Ref.current["activeQuestion"] = dataForGenerate_Ref.current["activeQuestion"].filter(e => e != correctKey) //漸化的に減っていく
     dataForGenerate_Ref.current["inactiveQuestion"].push(correctKey) //後ろに追加
     if(dataForGenerate_Ref.current["inactiveQuestion"].length >= deduplicationRange){
+        if(dataForGenerate_Ref.current["inactiveQuestion"].length == 0) return
         const restored = dataForGenerate_Ref.current["inactiveQuestion"].shift() //前から削除➡pushとshiftで漸化的に順番にactiveへ移動していく
         restored && dataForGenerate_Ref.current["activeQuestion"].push(restored)
     }
