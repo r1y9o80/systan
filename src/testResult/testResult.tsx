@@ -24,23 +24,23 @@ export const TestResult = () => {
   return (
     <div className="testResult-body">
       <header className="testResult-header">
-        <h1>正答率 {totalCorrect}/{answerdKeys.length}</h1>
-        <button className="btn-back" onClick={() => setSection("list")}>戻る</button>
+        <h1 className="testResult-score">正答率 {totalCorrect}/{answerdKeys.length}</h1>
+        <button className="testResult-btn-back" onClick={() => setSection("list")}>戻る</button>
       </header>
 
-      <ul className="question-list">
+      <ul className="testResult-question-list">
         {answerdKeys.map((answerKey, idx) => {
           const presentedKey = presentedKeys[idx];
           const isCorrect = answerKey === presentedKey;
 
           return (
-            <li key={`${presentedKey}-${idx}`} className={isCorrect ? "correct" : "incorrect"}>
-              <p className="question-text">{data[presentedKey][0]}</p>
-              <p className="answer-text">
+            <li key={`${presentedKey}-${idx}`} className={`testResult-question ${isCorrect ? "testResult-correct" : "testResult-incorrect"}`}>
+              <p className="testResult-question-text">{data[presentedKey][0]}</p>
+              <p className="testResult-answer-text">
                 あなたの解答: {answerKey === UNKNOWN_KEY ? "わからない" : data[answerKey]?.[1] ?? "―"}
               </p>
-              {!isCorrect && <p className="correct-text">正解: {data[presentedKey][1]}</p>}
-              {isCorrect && <p className="correct-mark">〇</p>}
+              {!isCorrect && <p className="testResult-correct-text">正解: {data[presentedKey][1]}</p>}
+              {isCorrect && <p className="testResult-correct-mark">〇</p>}
             </li>
           );
         })}

@@ -4,9 +4,6 @@
   padding: 32px;
   font-family: sans-serif;
 
-
-  
-
   .testResult-header {
     background-color: pink;
     display: flex;
@@ -15,12 +12,12 @@
     padding: 10px;
     margin-bottom: 24px;
 
-    h1 {
+    .testResult-score {
       font-size: 24px;
       margin: 0;
     }
 
-    .btn-back {
+    .testResult-btn-back {
       padding: 8px 16px;
       border-radius: 999px;
       border: none;
@@ -36,47 +33,47 @@
     }
   }
 
-  .question-list {
+  .testResult-question-list {
     list-style: none;
     padding: 0;
     margin: 0;
 
-    li {
+    .testResult-question {
       margin-bottom: 20px;
       padding: 16px;
       border-radius: 12px;
       border: 1px solid #ccc;
       text-align: left;
 
-      .question-text {
+      .testResult-question-text {
         font-weight: bold;
         margin-bottom: 8px;
         font-size: 18px;
       }
 
-      .answer-text {
+      .testResult-answer-text {
         margin: 0 0 4px 0;
         font-weight: 500;
       }
 
-      .correct-text {
+      .testResult-correct-text {
         margin: 0 0 4px 0;
         color: #d32f2f;
         font-weight: 500;
       }
 
-      .correct-mark {
+      .testResult-correct-mark {
         color: #2c7be5;
         font-weight: bold;
         margin: 0;
       }
 
-      &.correct {
+      &.testResult-correct {
         background: #e6f4ea;
         border-color: #6ac17f;
       }
 
-      &.incorrect {
+      &.testResult-incorrect {
         background: #ffe6e6;
         border-color: #f15a5a;
       }

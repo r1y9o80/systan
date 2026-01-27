@@ -67,20 +67,20 @@ export const Test = () => {
 
   return (
     <div className="test-body">
-      <header id="header">
-        <h4 id="header_title">{title}</h4>
-        <h4 id="header_numbers">{current + 1}/{totalQuestions}</h4>
-        <button id="header_button" onClick={() => setSection("list")}>終</button>
+      <header id="test-header">
+        <h4 id="test-header_title">{title}</h4>
+        <h4 id="test-header_numbers">{current + 1}/{totalQuestions}</h4>
+        <button id="test-header_button" onClick={() => setSection("list")}>終</button>
       </header>
 
       <main>
-        <h1 className="question">{data[correctKey][0]}</h1>
+        <h1 className="test-question">{data[correctKey][0]}</h1>
 
-        <div className="choices">
+        <div className="test-choices">
           {questionKeys.map((key) => (
             <button
               key={key}
-              className="choice-btn"
+              className="test-choice_btn"
               data-key={key}
               onClick={() => handleAnswer(key)}
             >
@@ -89,7 +89,7 @@ export const Test = () => {
           ))}
         <button
         key={UNKNOWN_KEY}
-        className="choice-btn unknown"
+        className="test-choice_btn unknown"
         onClick={() => handleAnswer(UNKNOWN_KEY)}
         >
         わからない
