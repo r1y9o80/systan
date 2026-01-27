@@ -8,8 +8,11 @@ import { shuffle } from "../Hooks/shuffle";
 import { testResult } from "../states/testResult";
 import { TypeTestResult } from "../types/testResult";
 
+const UNKNOWN_KEY = "__UNKNOWN__"; // わからない用
+const DUMMY_KEY = "__DUMMY__";     // ダミー選択肢用
+
 export const Test = () => {
-  const answerdKeys = useRef<string[]>([])
+  const answeredKeys = useRef<string[]>([])
   const setSection = useSetRecoilState(sectionState);
   const setTestResult = useSetRecoilState<TypeTestResult>(testResult)
   const toListValue = useRecoilValue<TypeToList>(toList);
@@ -22,7 +25,6 @@ export const Test = () => {
 
   const keys = useMemo(() => shuffle(Object.keys(data)), [data]);
   const totalQuestions = keys.length;
-
   const [current, setCurrent] = useState(0);
 
   const pickRandomN = (
@@ -41,7 +43,8 @@ export const Test = () => {
       }
     }
 
-    while (r.length < n) r.push("null");
+    // 足りない場合はダミー選択肢を埋める
+    while (r.length < n) r.push(DUMMY_KEY);
     return shuffle(r);
   };
 
@@ -49,12 +52,16 @@ export const Test = () => {
   const questionKeys = pickRandomN(keys, 4, correctKey);
 
   const handleAnswer = (inputedKey: string) => {
-    answerdKeys.current.push(inputedKey)
+    answeredKeys.current.push(inputedKey)
     if (current + 1 >= totalQuestions) {
-      setTestResult({data, answerdKeys: answerdKeys.current, presentedKeys: keys})
-      setSection("testResult"); // 終了
+      setTestResult({
+        data,
+        answerdKeys: answeredKeys.current,
+        presentedKeys: keys
+      });
+      setSection("testResult"); // テスト終了
     } else {
-      setCurrent((prev: number) => prev + 1);
+      setCurrent(prev => prev + 1);
     }
   };
 
@@ -62,18 +69,12 @@ export const Test = () => {
     <div className="test-body">
       <header id="header">
         <h4 id="header_title">{title}</h4>
-        <h4 id="header_numbers">
-          {current + 1}/{totalQuestions}
-        </h4>
-        <button id="header_button" onClick={() => setSection("list")}>
-          終
-        </button>
+        <h4 id="header_numbers">{current + 1}/{totalQuestions}</h4>
+        <button id="header_button" onClick={() => setSection("list")}>終</button>
       </header>
 
       <main>
-        <h1 className="question">
-          {data[correctKey][0]}
-        </h1>
+        <h1 className="question">{data[correctKey][0]}</h1>
 
         <div className="choices">
           {questionKeys.map((key) => (
@@ -83,9 +84,17 @@ export const Test = () => {
               data-key={key}
               onClick={() => handleAnswer(key)}
             >
-              {data[key]?.[1] ?? "―"}
+              {key === DUMMY_KEY ? "―" : data[key]?.[1] ?? "―"}
             </button>
           ))}
+        <button
+        key={UNKNOWN_KEY}
+        className="choice-btn unknown"
+        onClick={() => handleAnswer(UNKNOWN_KEY)}
+        >
+        わからない
+        </button>
+
         </div>
       </main>
     </div>

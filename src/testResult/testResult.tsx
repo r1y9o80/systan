@@ -4,10 +4,12 @@ import { sectionState } from "../states/section";
 import { testResult } from "../states/testResult";
 import { TypeTestResult } from "../types/testResult";
 
+const UNKNOWN_KEY = "__UNKNOWN__"; // Test.tsx と同じ
+
 export const TestResult = () => {
   const setSection = useSetRecoilState(sectionState);
   const testResultValue = useRecoilValue<TypeTestResult>(testResult);
-  const { data, answerdKeys, presentedKeys } = testResultValue; //presentedKeys(出題されたキー)は答え一覧と同等である
+  const { data, answerdKeys, presentedKeys } = testResultValue;
 
   if (!data || answerdKeys.length !== presentedKeys.length) {
     setSection("list");
@@ -23,9 +25,7 @@ export const TestResult = () => {
     <div className="testResult-body">
       <header className="testResult-header">
         <h1>正答率 {totalCorrect}/{answerdKeys.length}</h1>
-        <button className="btn-back" onClick={() => setSection("list")}>
-          戻る
-        </button>
+        <button className="btn-back" onClick={() => setSection("list")}>戻る</button>
       </header>
 
       <ul className="question-list">
@@ -34,17 +34,12 @@ export const TestResult = () => {
           const isCorrect = answerKey === presentedKey;
 
           return (
-            <li
-              key={`${presentedKey}-${idx}`}
-              className={isCorrect ? "correct" : "incorrect"}
-            >
+            <li key={`${presentedKey}-${idx}`} className={isCorrect ? "correct" : "incorrect"}>
               <p className="question-text">{data[presentedKey][0]}</p>
               <p className="answer-text">
-                あなたの解答: {data[answerKey][1]}
+                あなたの解答: {answerKey === UNKNOWN_KEY ? "わからない" : data[answerKey]?.[1] ?? "―"}
               </p>
-              {!isCorrect && (
-                <p className="correct-text">正解: {data[presentedKey][1]}</p>
-              )}
+              {!isCorrect && <p className="correct-text">正解: {data[presentedKey][1]}</p>}
               {isCorrect && <p className="correct-mark">〇</p>}
             </li>
           );

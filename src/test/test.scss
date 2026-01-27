@@ -70,3 +70,9 @@
   cursor: pointer;
   transition: transform 0.1s, box-shadow 0.1s;
 }
+
+
+.choice-btn.unknown {
+  grid-column: 1 / -1; // グリッド全列にまたがる
+  justify-self: center; // 横方向中央
+}
