@@ -38,8 +38,8 @@ main {
   padding: 32px 16px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: center;     /* 横方向中央は残す */
+  justify-content: flex-start; /* 縦方向は上寄せに */
   box-sizing: border-box;
 }
 
@@ -73,11 +73,9 @@ main {
   transition: transform 0.1s, box-shadow 0.1s;
 }
 
-/* わからないボタンだけ中央寄せ */
+/* わからないボタンは色を変えずに横幅だけ中央寄せ */
 .test-choice_btn.unknown {
-  grid-column: 1 / -1;   /* グリッド全列に広げる */
-  justify-self: center;   /* 横方向中央 */
-  width: 200px;           /* 任意で固定幅 */
-  background: #ffe066;
-  border-color: #ffc107;
+  grid-column: 1 / -1;
+  justify-self: center;
+  width: auto;
 }
