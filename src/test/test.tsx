@@ -41,7 +41,7 @@ export const Test = () => {
       }
     }
 
-    while (r.length < n) r.push("9999999999999");
+    while (r.length < n) r.push("null");
     return shuffle(r);
   };
 
@@ -70,7 +70,7 @@ export const Test = () => {
         </button>
       </header>
 
-      <main className="test-body">
+      <main>
         <h1 className="question">
           {data[correctKey][0]}
         </h1>
