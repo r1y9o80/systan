@@ -5,7 +5,7 @@ export const settings_recoil = atom<Record<string,any>>({
     default: {
         selectSum: 3,
         noneInSelect_Active: true,
-        questionSum: 20,
+        questionSum: 40,
         deduplicationRange: 5,
         selectWeight: 2,
     }

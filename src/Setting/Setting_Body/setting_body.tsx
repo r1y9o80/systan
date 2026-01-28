@@ -128,7 +128,7 @@ export const Setting_Body = ({ logOut }: Props) => {
       </div>
 
       <div className="setting-selects_container">
-        <label>正解問題の出現抑制</label>
+        <label>正解問題の出現確率変動値</label>
         <select
           value={settingData.selectWeight}
           onChange={e => handleSelectChange(e, "selectWeight")}
