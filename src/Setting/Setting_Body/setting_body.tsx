@@ -6,40 +6,32 @@ import { userData_recoil } from "../../states/userData"
 import { useTextSned } from "../../Hooks/textSend"
 import { doc, getFirestore, updateDoc } from "firebase/firestore"
 import { getAuth } from "firebase/auth"
+import { TypeSetting } from "../../types/setting"
 
 type Props = {
   logOut: () => void
 }
 
-type SettingData = {
-  selectSum: number
-  noneInSelect_Active: boolean
-  questionSum: number
-  deduplicationRange: number
-  selectWeight: number
-}
 
 type UserData = {
-  setting?: SettingData
+  setting?: TypeSetting
   [key: string]: any
 }
 
 export const Setting_Body = ({ logOut }: Props) => {
   const ObserveTextArea = useRef<HTMLTextAreaElement>(null)
 
-  const defaultSetting = useRecoilValue(settings_recoil)
+  const defaultSetting = useRecoilValue<TypeSetting>(settings_recoil)
   const [userData, setUserData] = useRecoilState<UserData>(userData_recoil)
 
-  const [settingData, setSettingData] = useState<SettingData>(
-    (userData as any).setting ?? (defaultSetting as SettingData)
-  )
+  const [settingData, setSettingData] = useState(userData["setting"] || defaultSetting)
 
 
   const [settingChanged, setSettingChanged] = useState(false)
 
   const handleSelectChange = (
     e: React.ChangeEvent<HTMLSelectElement>,
-    id: keyof SettingData
+    id: keyof TypeSetting
   ) => {
     setSettingData(prev => ({ ...prev, [id]: Number(e.target.value) }))
     setSettingChanged(true)
@@ -47,7 +39,7 @@ export const Setting_Body = ({ logOut }: Props) => {
 
   const handleCheckboxChange = (
     e: React.ChangeEvent<HTMLInputElement>,
-    id: keyof SettingData
+    id: keyof TypeSetting
   ) => {
     setSettingData(prev => ({ ...prev, [id]: e.target.checked }))
     setSettingChanged(true)

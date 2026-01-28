@@ -1,6 +1,7 @@
 import { atom } from "recoil";
+import { TypeSetting } from "../types/setting";
 
-export const settings_recoil = atom<Record<string,any>>({
+export const settings_recoil = atom<TypeSetting>({
     key: "settings",
     default: {
         selectSum: 3,
