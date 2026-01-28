@@ -25,7 +25,6 @@ export const Header: React.FC<{ activeStageKey: string, setActiveStageKey: React
   return (
     <header>
       <ul className="scrollable-list">
-        <li>テスト</li>
         {Object.entries(headersList).map(([_, newActiveStageKey], index) => (
           <li
             key={index}

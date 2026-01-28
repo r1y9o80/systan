@@ -19,7 +19,7 @@ export const List = () => {
         <button className="btn secondary" onClick={() => setSection("home")}>
           戻る
         </button>
-        <button className="btn primary" onClick={() => setSection("test")}>テスト</button>
+        <button className="btn primary" onClick={() => setSection("testIntro")}>テスト</button>
       </div>
 
       {data && (

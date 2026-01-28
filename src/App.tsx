@@ -13,6 +13,7 @@ import { Setting } from "./Setting/Setting.tsx";
 import { Maint } from "./maintenance/maintenance.tsx";
 import { GetUserData } from "./getUserData.tsx";
 import { TestResult } from "./testResult/testResult.tsx";
+import { TestIntro } from "./testIntro/testIntro.tsx";
 
 function AppContent({ logOut }: { logOut: () => Promise<void> }) {
   const in_maintenance = false; // メンテナンスモードON/OFF切り替え
@@ -30,6 +31,7 @@ function AppContent({ logOut }: { logOut: () => Promise<void> }) {
       {section === "kuizu" && <Kuizu />}
       {section === "result" && <Result />}
       {section === "list" && <List />}
+      {section === "testIntro" && <TestIntro />}
       {section === "test" && <Test />}
       {section === "testResult" && <TestResult />}
     </>

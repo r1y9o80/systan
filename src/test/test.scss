@@ -38,8 +38,8 @@ main {
   padding: 32px 16px;
   display: flex;
   flex-direction: column;
-  align-items: center;     /* 横方向中央は残す */
-  justify-content: flex-start; /* 縦方向は上寄せに */
+  align-items: center;      /* 横中央 */
+  justify-content: flex-start; /* 上寄せ */
   box-sizing: border-box;
 }
 
@@ -53,16 +53,36 @@ main {
   text-align: center;
 }
 
-/* ===== choices ===== */
-.test-choices {
+/* ===== choices wrapper ===== */
+.test-choices-wrapper {
   width: 100%;
   max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* unknown を横中央に */
+}
+
+/* ===== choices + overlay container ===== */
+.test-choices-container {
+  position: relative;
+  width: 100%;
+}
+
+/* ===== choices ===== */
+.test-choices {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 16px;
+  opacity: 0.25;
+  pointer-events: none;
 }
 
-/* 各選択肢ボタン */
+.test-choices.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ===== choice button ===== */
 .test-choice_btn {
   padding: 14px;
   font-size: 16px;
@@ -73,9 +93,32 @@ main {
   transition: transform 0.1s, box-shadow 0.1s;
 }
 
-/* わからないボタンは色を変えずに横幅だけ中央寄せ */
+.test-choice_btn:active {
+  transform: scale(0.98);
+}
+
+/* ===== overlay (選択肢のみ覆う) ===== */
+.test-choices-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.94);
+  border: 2px dashed #2c7be5;
+  border-radius: 14px;
+  z-index: 10;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  color: #2c7be5;
+  cursor: pointer;
+}
+
+/* ===== unknown ===== */
 .test-choice_btn.unknown {
-  grid-column: 1 / -1;
-  justify-self: center;
-  width: auto;
+  margin-top: 20px;
+  width: fit-content; /* ボタン幅を中身基準に */
 }

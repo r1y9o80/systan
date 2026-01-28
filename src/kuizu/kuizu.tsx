@@ -25,10 +25,10 @@ type dataForQuestionGenerateType = {
 export const Kuizu = () => {
   // Recoil値・状態
   const numOfQuestion = useRef(1)
-  const settingData = useRecoilValue(settings_recoil);
+  const [UserData, setUserData] = useRecoilState<Record<string, any>>(userData_recoil);
+  const settingData = UserData["setting"] || useRecoilValue(settings_recoil);
   console.log("settingData",settingData)
   const { noneInSelect_Active: unKnow_Buttn, selectSum: numOfNormalChoices, questionSum, deduplicationRange, selectWeight } = settingData;
-  const [UserData, setUserData] = useRecoilState<Record<string, any>>(userData_recoil);
   const setSection = useSetRecoilState(sectionState);
   const setQuizResult = useSetRecoilState(QuizResultState);
   const { data, title, dataName } = useRecoilValue<dataForQuiz_type>(dataForQuiz_recoil);

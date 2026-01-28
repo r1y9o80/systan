@@ -49,7 +49,7 @@ function setActiveKey(
     if(!dataForGenerate_Ref.current) return //ありえない
     dataForGenerate_Ref.current["activeQuestion"] = dataForGenerate_Ref.current["activeQuestion"].filter(e => e != correctKey) //漸化的に減っていく
     dataForGenerate_Ref.current["inactiveQuestion"].push(correctKey) //後ろに追加
-    if(dataForGenerate_Ref.current["inactiveQuestion"].length >= deduplicationRange){
+    if(dataForGenerate_Ref.current["inactiveQuestion"].length > deduplicationRange){
         if(dataForGenerate_Ref.current["inactiveQuestion"].length == 0) return
         const restored = dataForGenerate_Ref.current["inactiveQuestion"].shift() //前から削除➡pushとshiftで漸化的に順番にactiveへ移動していく
         restored && dataForGenerate_Ref.current["activeQuestion"].push(restored)

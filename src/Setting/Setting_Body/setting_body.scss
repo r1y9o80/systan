@@ -1,138 +1,142 @@
 @use '../../styles/variables' as *;
 
 * {
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
 }
 
 .setting-container {
-    width: $global-display-Width;
-    height: calc(100svh - $footer_height);
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: center;
+  width: $global-display-Width;
+  min-height: calc(100svh - $footer_height);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 24px;
+  overflow-y: auto;
 }
 
-.setting-logoutButton_container{
-    width: 100%;
-    height: 10%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 20px;
+/* ---------- Logout ---------- */
+
+.setting-logoutButton_container {
+  margin-top: 20px;
 }
 
-.logout_button {
-    background-color: rgb(75, 75, 248);
-    height: 50px;
-    width: 200px;
-    border-radius: 5px;
-    font-size: 17px;
-    color: white;
-    margin-top: 20px;
+.setting-logout_button {
+  width: 200px;
+  height: 48px;
+  background-color: rgb(75, 75, 248);
+  color: white;
+  font-size: 16px;
+  border-radius: 6px;
 }
 
-.setting-selectSum_label {
-    margin-top: 30px;
+/* ---------- Select ---------- */
+
+.setting-selects_container {
+  width: 90%;
+  max-width: 360px;
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
-.setting-container select{
-    height: 30px;
-    width: 150px;
+.setting-selects_container select {
+  height: 36px;
+  font-size: 15px;
 }
 
-.toggle-div{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 30px;
+/* ---------- Toggle ---------- */
+
+.setting-toggle_container {
+  margin-top: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
 }
 
-.toggle-p{
-    font-size: 18px;
-    margin-bottom: 10px;
+.setting-toggle_label {
+  font-size: 16px;
 }
 
-.toggle-button-1 {
-    display: inline-block;
-    position: relative;
-    width: 100px;
-    height: 50px;
-    border-radius: 50px;
-    background-color: #dddddd;
-    cursor: pointer;
-    transition: background-color .4s;
+.setting-toggle {
+  position: relative;
+  width: 96px;
+  height: 48px;
+  background-color: #ddd;
+  border-radius: 48px;
+  cursor: pointer;
 }
 
-.toggle-button-1:has(:checked) {
-    background-color: #4bd865;
+.setting-toggle:has(input:checked) {
+  background-color: #4bd865;
 }
 
-.toggle-button-1::after {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    box-shadow: 0 0 5px rgb(0 0 0 / 20%);
-    background-color: #fff;
-    content: '';
-    transition: left .4s;
+.setting-toggle::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 44px;
+  height: 44px;
+  background-color: white;
+  border-radius: 50%;
+  transition: left .3s;
 }
 
-.toggle-button-1:has(:checked)::after {
-    left: 50px;
+.setting-toggle:has(input:checked)::after {
+  left: 50px;
 }
 
-.toggle-button-1 input {
-    display: none;
+.setting-toggle input {
+  display: none;
 }
 
-.messageForm {
-    // background-color: aqua;
-    width: 100%;
-    height: 210px;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: center;
+/* ---------- Save ---------- */
+
+.setting-save_button {
+  margin-top: 32px;
+  width: 200px;
+  height: 44px;
+  font-size: 16px;
+  background-color: rgb(75, 75, 248);
 }
 
-.messageForm p {
-    width: 90%;
-    margin-bottom: 5px;
+.setting-save_button:disabled {
+  opacity: .5;
+  background-color: white;
 }
 
-.textbox {
-    // background-color: #4bd865;
-    width: 90%;
-    height: 80%;
-    text-align: left;
-    vertical-align: top;
-    padding: 10px;
+/* ---------- Message ---------- */
+
+.setting-messageForm {
+  width: 100%;
+  max-width: 500px;
+  margin-top: auto;
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
 }
 
-.textSend_buttonContainer{
-    // background-color: brown;
-    width: 90%;
-    height: 25%;
-    display: flex;
-    align-items: center;
-    justify-content: end;
+.setting-textbox {
+  width: 90%;
+  height: 120px;
+  padding: 10px;
+  resize: none;
 }
 
-.textSend_button {
-    background-color: rgb(75, 75, 248);
-    height: 80%;
-    width: 30%;
-    color: white;
+.setting-textSend_buttonContainer {
+  width: 90%;
+  display: flex;
+  justify-content: flex-end;
 }
 
-.selects_container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 10px;
+.setting-textSend_button {
+  width: 120px;
+  height: 40px;
+  background-color: rgb(75, 75, 248);
+  color: white;
+  border-radius: 6px;
 }

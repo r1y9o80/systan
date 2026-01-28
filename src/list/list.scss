@@ -3,17 +3,10 @@
   padding: 24px;
   max-width: 720px;
   margin: 0 auto;
+  box-sizing: border-box;
 }
 
-/* ===== 上部アクション ===== */
-.top-actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 20px;
-}
-
-
+/* ===== タイトル ===== */
 .list-title {
   margin: 0 0 16px;
   text-align: center;
@@ -23,6 +16,13 @@
   letter-spacing: 0.05em;
 }
 
+/* ===== 上部アクション ===== */
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
 
 /* ===== ボタン共通 ===== */
 .btn {
@@ -60,24 +60,23 @@
   }
 }
 
-/* ===== テーブルラッパー ===== */
-/* 横スクロールは必要な時だけ */
+/* ===== テーブルラッパー（スクロール専用） ===== */
 .table-wrapper {
-  display: flex;
-  justify-content: center;
-  overflow-x: auto;
-  padding: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;          /* ← 横スクロールの本体 */
+  overflow-y: hidden;
   margin-top: 12px;
 
-  border: 1px solid #2c7be5;     // はっきりした外枠
+  border: 1px solid #2c7be5;
   background: #ffffff;
-
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
 }
 
 /* ===== テーブル本体 ===== */
 .word-table {
-  margin: 0 auto; /* ← 中央寄せの本命 */
+  width: max-content;        /* ← 中身にフィット */
+  min-width: 100%;           /* ← 小さい時は画面幅 */
   border-collapse: collapse;
   table-layout: auto;
   background: #fff;
@@ -101,23 +100,21 @@
     background: #f0f4ff;
   }
 
-  /* 問題番号：内容フィット（最大4桁） */
-/* 問題番号：完全フィット */
-    th:nth-child(1),
-    td:nth-child(1) {
-    padding: 8px 6px;              // 横を最小限に
+  /* ===== 問題番号（内容フィット） ===== */
+  th:nth-child(1),
+  td:nth-child(1) {
+    padding: 8px 6px;
     font-variant-numeric: tabular-nums;
-    width: 1%;                     // ← これが効く
-    }
+    width: 1%;
+  }
 
-
-  /* 英単語 */
+  /* ===== 英単語 ===== */
   th:nth-child(2),
   td:nth-child(2) {
     max-width: 140px;
   }
 
-  /* 意味 */
+  /* ===== 意味 ===== */
   th:nth-child(3),
   td:nth-child(3) {
     max-width: 220px;

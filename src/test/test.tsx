@@ -1,4 +1,4 @@
-import "./test.scss"
+import "./test.scss";
 import { useState, useRef, useMemo } from "react";
 import { useSetRecoilState, useRecoilValue } from "recoil";
 import { sectionState } from "../states/section";
@@ -7,14 +7,15 @@ import { TypeToList } from "../types/toList";
 import { shuffle } from "../Hooks/shuffle";
 import { testResult } from "../states/testResult";
 import { TypeTestResult } from "../types/testResult";
+import { sendTestResult } from "../Hooks/sendTestResult";
 
-const UNKNOWN_KEY = "__UNKNOWN__"; // わからない用
-const DUMMY_KEY = "__DUMMY__";     // ダミー選択肢用
+const UNKNOWN_KEY = "__UNKNOWN__";
+const DUMMY_KEY = "__DUMMY__";
 
 export const Test = () => {
-  const answeredKeys = useRef<string[]>([])
+  const answeredKeys = useRef<string[]>([]);
   const setSection = useSetRecoilState(sectionState);
-  const setTestResult = useSetRecoilState<TypeTestResult>(testResult)
+  const setTestResult = useSetRecoilState<TypeTestResult>(testResult);
   const toListValue = useRecoilValue<TypeToList>(toList);
   const { data, title } = toListValue;
 
@@ -26,12 +27,9 @@ export const Test = () => {
   const keys = useMemo(() => shuffle(Object.keys(data)), [data]);
   const totalQuestions = keys.length;
   const [current, setCurrent] = useState(0);
+  const [showChoices, setShowChoices] = useState(false);
 
-  const pickRandomN = (
-    array: string[],
-    n: number,
-    correctKey: string
-  ): string[] => {
+  const pickRandomN = (array: string[], n: number, correctKey: string) => {
     const r = [correctKey];
     const s = new Set<number>();
 
@@ -43,7 +41,6 @@ export const Test = () => {
       }
     }
 
-    // 足りない場合はダミー選択肢を埋める
     while (r.length < n) r.push(DUMMY_KEY);
     return shuffle(r);
   };
@@ -51,17 +48,21 @@ export const Test = () => {
   const correctKey = keys[current];
   const questionKeys = pickRandomN(keys, 4, correctKey);
 
-  const handleAnswer = (inputedKey: string) => {
-    answeredKeys.current.push(inputedKey)
+  const handleAnswer = (key: string) => {
+    answeredKeys.current.push(key);
+    setShowChoices(false);
+
     if (current + 1 >= totalQuestions) {
       setTestResult({
         data,
         answerdKeys: answeredKeys.current,
-        presentedKeys: keys
+        presentedKeys: keys,
       });
-      setSection("testResult"); // テスト終了
+      const totalCorrect = answeredKeys.current.reduce((count, val, i) => (val === keys[i] ? count + 1 : count),0);
+      sendTestResult(title, `${totalCorrect}/${totalQuestions}`)
+      setSection("testResult");
     } else {
-      setCurrent(prev => prev + 1);
+      setCurrent((p) => p + 1);
     }
   };
 
@@ -69,32 +70,52 @@ export const Test = () => {
     <div className="test-body">
       <header id="test-header">
         <h4 id="test-header_title">{title}</h4>
-        <h4 id="test-header_numbers">{current + 1}/{totalQuestions}</h4>
-        <button id="test-header_button" onClick={() => setSection("list")}>終</button>
+        <h4 id="test-header_numbers">
+          {current + 1}/{totalQuestions}
+        </h4>
+        <button id="test-header_button" onClick={() => setSection("list")}>
+          終
+        </button>
       </header>
 
       <main>
         <h1 className="test-question">{data[correctKey][0]}</h1>
 
-        <div className="test-choices">
-          {questionKeys.map((key) => (
-            <button
-              key={key}
-              className="test-choice_btn"
-              data-key={key}
-              onClick={() => handleAnswer(key)}
-            >
-              {key === DUMMY_KEY ? "―" : data[key]?.[1] ?? "―"}
-            </button>
-          ))}
-        <button
-        key={UNKNOWN_KEY}
-        className="test-choice_btn unknown"
-        onClick={() => handleAnswer(UNKNOWN_KEY)}
-        >
-        わからない
-        </button>
+        <div className="test-choices-wrapper">
+          {/* 選択肢＋overlay 専用コンテナ */}
+          <div className="test-choices-container">
+            {!showChoices && (
+              <div
+                className="test-choices-overlay"
+                onClick={() => setShowChoices(true)}
+              >
+                問題がわかったらタップして
+                <br />
+                選択肢を表示
+              </div>
+            )}
 
+            <div className={`test-choices ${showChoices ? "active" : ""}`}>
+              {questionKeys.map((key) => (
+                <button
+                  key={key}
+                  className="test-choice_btn"
+                  onClick={() => handleAnswer(key)}
+                  disabled={!showChoices}
+                >
+                  {key === DUMMY_KEY ? "―" : data[key]?.[1] ?? "―"}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* わからない（常に表示・overlay非対象） */}
+          <button
+            className="test-choice_btn unknown"
+            onClick={() => handleAnswer(UNKNOWN_KEY)}
+          >
+            わからない
+          </button>
         </div>
       </main>
     </div>
