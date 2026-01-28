@@ -99,6 +99,8 @@
   width: 200px;
   height: 63px;
   font-size: 16px;
+  padding: 0;          /* ← これ超重要 */
+  line-height: 63px;   /* ← 高さと一致させる */
   background-color: rgb(75, 75, 248);
   color: white;
 }
