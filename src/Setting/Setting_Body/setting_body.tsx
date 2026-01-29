@@ -113,7 +113,7 @@ export const Setting_Body = ({ logOut }: Props) => {
           value={settingData.deduplicationRange}
           onChange={e => handleSelectChange(e, "deduplicationRange")}
         >
-          {[0, 5, 10].map(v => (
+          {[0, 5, 10, 15].map(v => (
             <option key={v} value={v}>{v}</option>
           ))}
         </select>
