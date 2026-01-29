@@ -123,7 +123,7 @@ export const Kuizu = () => {
     if (numOfQuestion.current >= questionSum) {
       const CorrectPercentage = Math.floor((sumOfCorrect.current * 100) / questionSum);
       useSaveQuestionsData(setUserData, dataName, questionsData.current);
-      useQuizResultSend(title, CorrectPercentage);
+      useQuizResultSend(title, CorrectPercentage,`${settingData}`);
       setQuizResult({ data, result: Quiz_log.current, CorrectPercentage });
       setSection("result");
     } else {

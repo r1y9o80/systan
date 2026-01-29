@@ -1,7 +1,7 @@
 import { getAuth } from "firebase/auth";
 import { Timestamp } from "firebase/firestore";
 
-export const useQuizResultSend = async (title: string, CorrectPercentage: number) => {
+export const useQuizResultSend = async (title: string, CorrectPercentage: number,setting: string) => {
     const auth = getAuth();
     const userId = auth.currentUser?.uid;
     const displayName = auth.currentUser?.displayName;
@@ -15,6 +15,7 @@ export const useQuizResultSend = async (title: string, CorrectPercentage: number
     `　[Quiz Result] 📅 ${now}`,
     `　👤 ${displayName} (${userId})`,
     `　📘 [${title}]`,
+    `　⚙[${setting}]`,
     `　✅ 正答率: ${CorrectPercentage}%`,
     "───────────────"
     ].join("\n");
