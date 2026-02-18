@@ -134,7 +134,7 @@ export const Kuizu = () => {
   };
 
   // 読み上げ処理
-  if (screenState === "solved") useEnglish_read(data[correctKey][0]);
+  if (screenState === "solved" && dataName === "systan-data") useEnglish_read(data[correctKey][0]);
 
   return (
     <div id="kuizu">

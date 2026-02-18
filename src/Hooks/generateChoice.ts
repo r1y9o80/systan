@@ -23,10 +23,10 @@ function generateSelect(
 ): string[] {
   const valueSet = new Set([QuizData[correctKey][1]]);  //選択肢リスト(set)。あらかじめ正解キーを入れておく
   const choices = [correctKey];
+  console.log("QuizData:",QuizData)
 
   for (const key of shuffle(Keys)) {
     if (key === correctKey) continue;
-
     const value = QuizData[key][1];
     if (valueSet.has(value)) continue;
     choices.push(key);
