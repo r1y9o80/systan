@@ -13,7 +13,7 @@ jobs:
       # Node.js をセットアップ
       - uses: actions/setup-node@v3
         with:
-          node-version: '18' # package.json に合わせる
+          node-version: '20' # package.json に合わせる
 
       # 依存関係を正確にインストール
       - run: npm ci
