@@ -1,6 +1,6 @@
 git init
 git add .
 git commit -m "a"
-git push origin main
+git push -f origin main
 npm run build
 firebase deploy --only hosting
