@@ -43,7 +43,8 @@ export const init: { [key: string]: BodyBlockType[] } = {
     // new bodyBlock("kobun315-data", "[古文単語315]総復習", "[古文単語315]ステージ2　(level-2)", "kobun-tango-Img", 401, 136)
   ],
   "[化合物色]ステージ1": [
-    new bodyBlock("compound-color", "[化合物色]", "[化合物色]ステージ1　(level-1)", "kobun-tango-Img", 1, 18),
+    new bodyBlock("compound-color", "[化合物色(錯イオン・鉄イオン)]", "[化合物色]ステージ1　(level-1)", "kobun-tango-Img", 1, 18),
+    new bodyBlock("compound-color", "[化合物色(銀イオン・銅イオン)]", "[化合物色]ステージ1　(level-1)", "kobun-tango-Img", 19, 12),
     // ...bodyBlock.generateSequenceBlocks("compound-color", "[化合物色]", "[化合物色]ステージ1　(level-1)", "kobun-tango-Img", 1, 20, 1),
   ]
 };
