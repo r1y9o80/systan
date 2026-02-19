@@ -45,7 +45,7 @@ export const init: { [key: string]: BodyBlockType[] } = {
   "[化合物色]ステージ1": [
     new bodyBlock("compound-color", "[化合物色(錯イオン・鉄イオン)]", "[化合物色]ステージ1　(level-1)", "kobun-tango-Img", 1, 18),
     new bodyBlock("compound-color", "[化合物色(銀イオン・銅イオン)]", "[化合物色]ステージ1　(level-1)", "kobun-tango-Img", 19, 12),
-    new bodyBlock("compound-color", "[化合物色(クロムイオン・マンガンイオン)]", "[化合物色]ステージ1　(level-1)", "kobun-tango-Img", 31, 10)
+    new bodyBlock("compound-color", "[化合物色(クロムイオン・マンガンイオン)]", "[化合物色]ステージ1　(level-1)", "kobun-tango-Img", 31, 10),
     new bodyBlock("compound-color", "[化合物色(まとめ)]", "[化合物色]ステージ1　(level-1)", "kobun-tango-Img", 1, 40)
     // ...bodyBlock.generateSequenceBlocks("compound-color", "[化合物色]", "[化合物色]ステージ1　(level-1)", "kobun-tango-Img", 1, 20, 1),
   ]
